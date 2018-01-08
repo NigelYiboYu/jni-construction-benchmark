@@ -28,53 +28,59 @@
  * */
 package com.evolvedbinary.jni.consbench;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  *
- * A small JNI Benchmark to show the difference
- * in cost between various models of Object Construction
- * for a Java API that wraps a C++ API using JNI
+ * A small JNI Benchmark to show the difference in cost between various models
+ * of Object Construction for a Java API that wraps a C++ API using JNI
  *
  * @author Adam Retter <adam.retter@googlemail.com>
  */
 public class Benchmark {
 
-    private static long ITERATIONS = 1000000;
+	private static long ITERATIONS = 1000000;
 
-    public final static void main(final String args[]) {
-    	
+	public final static void main(final String args[]) {
+
 		if (args.length >= 1)
 			ITERATIONS = Long.parseLong(args[0]);
-    	
-		System.out.println("Using iteration count " + ITERATIONS + "\n\n\");
-		
-    	System.loadLibrary("jnibench");
 
-        //TEST1 - Foo By Call
-    	System.out.println("Starting FooByCall test " + ITERATIONS + " iterations");
-        final long start1 = System.currentTimeMillis();
-        for(int i = 0; i < ITERATIONS; i++) {
-            final FooByCall fooByCall = new FooByCall();
-        }
-        final long end1 = System.currentTimeMillis();
-        System.out.println("FooByCall: " + (end1 - start1) + "ms\n\n");
+		System.out.println("Using iteration count and multiplier " + ITERATIONS + "\n\n");
 
+		System.loadLibrary("jnibench");
 
-        //TEST2 - Foo By Call Static
-        System.out.println("Starting FooByCallStatic test " + ITERATIONS + " iterations");
-        final long start2 = System.currentTimeMillis();
-        for(int i = 0; i < ITERATIONS; i++) {
-            final FooByCallStatic fooByCallStatic = new FooByCallStatic();
-        }
-        final long end2 = System.currentTimeMillis();
-        System.out.println("FooByCallStatic: " + (end2 - start2) + "ms\n\n");
+		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
-        //TEST3 - Foo By Call Invoke
-        System.out.println("Starting FooByCallInvoke test " + ITERATIONS + " iterations");
-        final long start3 = System.currentTimeMillis();
-        for(int i = 0; i < ITERATIONS; i++) {
-            final FooByCallInvoke fooByCallInvoke = new FooByCallInvoke();
-        }
-        final long end3 = System.currentTimeMillis();
-        System.out.println("FooByCallInvoke: " + (end3 - start3) + "ms");
-    }
+		// TEST1 - Foo By Call
+		System.out.println("Starting test FooByCall " + numberFormat.format(ITERATIONS) + " iterations");
+		final long start1 = System.currentTimeMillis();
+		for (long j = 0; j < ITERATIONS; j++) {
+			final FooByCall fooByCall = new FooByCall();
+		}
+
+		final long end1 = System.currentTimeMillis();
+		System.out.println("FooByCall: " + numberFormat.format(end1 - start1) + "ms\n\n");
+
+		// TEST2 - Foo By Call Static
+		System.out.println("Starting test FooByCallStatic " + numberFormat.format(ITERATIONS) + " iterations");
+		final long start2 = System.currentTimeMillis();
+		for (long j = 0; j < ITERATIONS; j++) {
+			final FooByCallStatic fooByCallStatic = new FooByCallStatic();
+		}
+
+		final long end2 = System.currentTimeMillis();
+		System.out.println("FooByCallStatic: " + numberFormat.format(end2 - start2) + "ms\n\n");
+
+		// TEST3 - Foo By Call Invoke
+		System.out.println("Starting test FooByCallInvoke " + numberFormat.format(ITERATIONS) + " iterations");
+		final long start3 = System.currentTimeMillis();
+		for (long j = 0; j < ITERATIONS; j++) {
+			final FooByCallInvoke fooByCallInvoke = new FooByCallInvoke();
+		}
+
+		final long end3 = System.currentTimeMillis();
+		System.out.println("FooByCallInvoke: " + numberFormat.format(end3 - start3) + "ms");
+	}
 }
