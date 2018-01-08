@@ -47,7 +47,7 @@ public class Benchmark {
 		if (args.length >= 1)
 			ITERATIONS = Long.parseLong(args[0]);
 
-		System.out.println("Using iteration count and multiplier " + ITERATIONS + "\n\n");
+		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
 
 		System.loadLibrary("jnibench");
 
