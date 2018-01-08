@@ -41,14 +41,8 @@ public class Benchmark {
     private final static int ITERATIONS = 1000000;
 
     public final static void main(final String args[]) {
-
-	//String path = System.getProperty("java.library.path");
-	//path = "/home/yunigel/git/jni-construction-benchmark/src/main/java:" + path;
-	//System.out.println("Setting java.library.path to " + path);
-
-	//System.setProperty("java.library.path", path);
+    	
     	System.loadLibrary("jnibench");
-    	//System.load("/home/yunigel/git/jni-construction-benchmark/src/main/java/Foo.so");
 
         //TEST1 - Foo By Call
     	System.out.println("Starting FooByCall test " + ITERATIONS + " iterations");
