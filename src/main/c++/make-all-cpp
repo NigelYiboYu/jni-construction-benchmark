@@ -6,4 +6,4 @@ INC_PATH="-I/home/yunigel/git/jni-construction-benchmark/src/main/java -I/usr/li
 CXXFLAGS="-shared -fPIC -std=c++11"
 rm -f ./*.o
 
-gcc $CXXFLAGS -o Foo.so $INC_PATH Foo.cpp FooByCall.cpp FooByCallStatic.cpp FooByCallInvoke.cpp
+gcc $CXXFLAGS -o libjnibench.so $INC_PATH Foo.cpp FooByCall.cpp FooByCallStatic.cpp FooByCallInvoke.cpp

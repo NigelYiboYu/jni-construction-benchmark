@@ -42,10 +42,14 @@ public class Benchmark {
 
     public final static void main(final String args[]) {
 
-        //NarSystem.loadLibrary();
+	//String path = System.getProperty("java.library.path");
+	//path = "/home/yunigel/git/jni-construction-benchmark/src/main/java:" + path;
+	//System.out.println("Setting java.library.path to " + path);
 
-    	System.LoadLibrary("Foo.so");
-    	
+	//System.setProperty("java.library.path", path);
+    	System.loadLibrary("jnibench");
+    	//System.load("/home/yunigel/git/jni-construction-benchmark/src/main/java/Foo.so");
+
         //TEST1 - Foo By Call
     	System.out.println("Starting FooByCall test " + ITERATIONS + " iterations");
         final long start1 = System.currentTimeMillis();
@@ -53,7 +57,7 @@ public class Benchmark {
             final FooByCall fooByCall = new FooByCall();
         }
         final long end1 = System.currentTimeMillis();
-        System.out.println("FooByCall: " + (end1 - start1) + "ms");
+        System.out.println("FooByCall: " + (end1 - start1) + "ms\n\n");
 
 
         //TEST2 - Foo By Call Static
@@ -63,7 +67,7 @@ public class Benchmark {
             final FooByCallStatic fooByCallStatic = new FooByCallStatic();
         }
         final long end2 = System.currentTimeMillis();
-        System.out.println("FooByCallStatic: " + (end2 - start2) + "ms");
+        System.out.println("FooByCallStatic: " + (end2 - start2) + "ms\n\n");
 
         //TEST3 - Foo By Call Invoke
         System.out.println("Starting FooByCallInvoke test " + ITERATIONS + " iterations");
