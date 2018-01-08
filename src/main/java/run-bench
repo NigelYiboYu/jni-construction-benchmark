@@ -1,5 +1,12 @@
-
-
 export LD_LIBRARY_PATH=`pwd`
 
-java  -cp . com.evolvedbinary.jni.consbench.Benchmark
+JAVA=/jit/team/yunigel/sdk/bin/java
+
+JAVA="/jit/team/yunigel/openJDK9/jdk-9+181/bin/java"
+
+
+
+echo Testing this java
+$JAVA -version
+
+$JAVA  -cp . com.evolvedbinary.jni.consbench.Benchmark
