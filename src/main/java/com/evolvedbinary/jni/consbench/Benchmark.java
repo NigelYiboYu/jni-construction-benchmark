@@ -38,10 +38,15 @@ package com.evolvedbinary.jni.consbench;
  */
 public class Benchmark {
 
-    private final static int ITERATIONS = 1000000;
+    private static long ITERATIONS = 1000000;
 
     public final static void main(final String args[]) {
     	
+		if (args.length >= 1)
+			ITERATIONS = Long.parseLong(args[0]);
+    	
+		System.out.println("Using iteration count " + ITERATIONS + "\n\n\");
+		
     	System.loadLibrary("jnibench");
 
         //TEST1 - Foo By Call
