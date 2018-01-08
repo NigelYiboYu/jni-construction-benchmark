@@ -42,9 +42,12 @@ public class Benchmark {
 
     public final static void main(final String args[]) {
 
-        NarSystem.loadLibrary();
+        //NarSystem.loadLibrary();
 
+    	System.LoadLibrary("Foo.so");
+    	
         //TEST1 - Foo By Call
+    	System.out.println("Starting FooByCall test " + ITERATIONS + " iterations");
         final long start1 = System.currentTimeMillis();
         for(int i = 0; i < ITERATIONS; i++) {
             final FooByCall fooByCall = new FooByCall();
@@ -54,6 +57,7 @@ public class Benchmark {
 
 
         //TEST2 - Foo By Call Static
+        System.out.println("Starting FooByCallStatic test " + ITERATIONS + " iterations");
         final long start2 = System.currentTimeMillis();
         for(int i = 0; i < ITERATIONS; i++) {
             final FooByCallStatic fooByCallStatic = new FooByCallStatic();
@@ -62,6 +66,7 @@ public class Benchmark {
         System.out.println("FooByCallStatic: " + (end2 - start2) + "ms");
 
         //TEST3 - Foo By Call Invoke
+        System.out.println("Starting FooByCallInvoke test " + ITERATIONS + " iterations");
         final long start3 = System.currentTimeMillis();
         for(int i = 0; i < ITERATIONS; i++) {
             final FooByCallInvoke fooByCallInvoke = new FooByCallInvoke();
