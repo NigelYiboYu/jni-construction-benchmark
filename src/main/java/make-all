@@ -1,29 +1,35 @@
 
 pwd=`pwd`
+
+
+export JAVA=/jit/team/yunigel/sdk/bin/java
+export JAVAC=/jit/team/yunigel/sdk/bin/javac
+export JAVAH=/jit/team/yunigel/sdk/bin/javah
+
+
+export JAVA="/jit/team/yunigel/openJDK9/jdk-9+181/bin/java"
+export JAVAC="/jit/team/yunigel/openJDK9/jdk-9+181/bin/javac"
+export JAVAH="/jit/team/yunigel/openJDK9/jdk-9+181/bin/javah"
+
+
 echo "javac all java files"
 rm -f com/evolvedbinary/jni/consbench/*.class
-javac com/evolvedbinary/jni/consbench/*.java
+$JAVAC com/evolvedbinary/jni/consbench/*.java
 rm -f ./*.so
-
 
 
 echo "Creating JNI header files with javah"
 rm -f ./*.h
 
-javah com.evolvedbinary.jni.consbench.FooByCall
-
-javah com.evolvedbinary.jni.consbench.FooByCallStatic
-
-javah com.evolvedbinary.jni.consbench.FooByCallInvoke
+$JAVAH com.evolvedbinary.jni.consbench.FooByCall
+$JAVAH com.evolvedbinary.jni.consbench.FooByCallStatic
+$JAVAH com.evolvedbinary.jni.consbench.FooByCallInvoke
 
 
 
 echo "Compiling C++ code into shared lib"
-
 cd ../c++
-
 ./make-all-cpp
 
 cd $pwd
-
 cp ../c++/*.so .
