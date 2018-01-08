@@ -1,0 +1,27 @@
+
+pwd=`pwd`
+echo "javac all java files"
+rm -f com/evolvedbinary/jni/consbench/*.class
+javac com/evolvedbinary/jni/consbench/*.java
+
+
+
+echo "Creating JNI header files with javah"
+rm -f ./*.h
+
+javah com.evolvedbinary.jni.consbench.FooByCall
+
+javah com.evolvedbinary.jni.consbench.FooByCallStatic
+
+javah com.evolvedbinary.jni.consbench.FooByCallInvoke
+
+
+
+echo "Compiling C++ code into shared lib"
+
+cd ../c++
+
+./make-all-cpp
+
+
+cd $pwd
