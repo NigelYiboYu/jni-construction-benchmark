@@ -43,15 +43,7 @@ public:
 	// the ptr
 	static jfieldID getHandleFieldID(JNIEnv* env) {
 
-		// pragma convert is needed for string literals to be converted correctly on zOS
-#if defined(ZOS)
-#pragma convert(819)
-#endif
 		static jfieldID fid = env->GetFieldID(DERIVED::getJClass(env), "_nativeHandle", "J");
-#if defined(ZOS)
-#pragma convert(0)
-#endif
-
 		assert(fid != nullptr);
 		return fid;
 	}
@@ -73,14 +65,7 @@ public:
 class FooByCallInvokeJni: public FooJniClass<consbench::Foo*, FooByCallInvokeJni> {
 public:
 	static jclass getJClass(JNIEnv* env) {
-
-#if defined(ZOS)
-#pragma convert(819)
-#endif
 		return FooJniClass<consbench::Foo*, FooByCallInvokeJni>::getJClass(env, "com/jni/consbench/FooByCallInvoke");
-#if defined(ZOS)
-#pragma convert(0)
-#endif
 	}
 };
 
