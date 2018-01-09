@@ -55,7 +55,7 @@ public class BenchmarkInMain {
 			test = Integer.parseInt(args[1]);
 
 		if (args.length >= 3)
-			warmup = Integer.parseInt(args[2]) != 0;
+			warmup = (Integer.parseInt(args[2]) != 0);
 
 		System.out.println("Calling JNI from main() function.");
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
@@ -80,7 +80,8 @@ public class BenchmarkInMain {
 			for (long j = 0; j < ITERATIONS; j++) {
 				final FooByCallInvoke fooByCallInvoke = new FooByCallInvoke();
 			}
-
+		} else {
+			System.out.println("No warm up");
 		}
 
 		// TEST1 - Foo By Call

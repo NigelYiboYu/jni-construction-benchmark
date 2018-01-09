@@ -58,6 +58,7 @@ public class Benchmark {
 			warmup = Integer.parseInt(args[2]) != 0;
 
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
+		System.out.println("No JNI from main() function.");
 
 		System.loadLibrary("jnibench");
 
