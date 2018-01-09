@@ -1,4 +1,9 @@
 INC_PATH="-I/home/yunigel/git/jni-construction-benchmark/src/main/java -I/usr/lib/jvm/java-8-openjdk-amd64/include -I/usr/lib/jvm/java-8-openjdk-amd64/include/linux "
+
+
+
+INC_PATH="-I/jit/team/yunigel/jni-bench/src -I/jit/team/yunigel/openJDK9/jdk-9+181/include/ -I/jit/team/yunigel/openJDK9/jdk-9+181/include/linux "
+
 CXXFLAGS="-shared -fPIC -std=c++11"
 rm -f ./*.o
 
