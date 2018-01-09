@@ -26,26 +26,31 @@
  */
 package com.evolvedbinary.jni.consbench;
 
+/**
+ * 
+ * AutoCloseable call the close() methosd automatically when exiting a
+ * try-with-resource block.
+ */
 public abstract class NativeBackedObject implements AutoCloseable {
 
-    protected long _nativeHandle;
-    protected boolean _nativeOwner;
+	protected long _nativeHandle;
+	protected boolean _nativeOwner;
 
-    protected NativeBackedObject() {
-        this._nativeHandle = 0;
-        this._nativeOwner = true;
-    }
+	protected NativeBackedObject() {
+		this._nativeHandle = 0;
+		this._nativeOwner = true;
+	}
 
-    @Override
-    public void close() {
-        synchronized(this) {
-            if(_nativeOwner && _nativeHandle != 0) {
-                disposeInternal();
-                _nativeHandle = 0;
-                _nativeOwner = false;
-            }
-        }
-    }
+	@Override
+	public void close() {
+		synchronized (this) {
+			if (_nativeOwner && _nativeHandle != 0) {
+				disposeInternal();
+				_nativeHandle = 0;
+				_nativeOwner = false;
+			}
+		}
+	}
 
-    protected abstract void disposeInternal();
+	protected abstract void disposeInternal();
 }

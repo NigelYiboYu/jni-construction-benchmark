@@ -28,8 +28,8 @@ $JAVAH com.evolvedbinary.jni.consbench.FooByCallInvoke
 
 
 echo "Compiling C++ code into shared lib"
-cd ../c++
+cd c++
 ./make-all-cpp
 
 cd $pwd
-cp ../c++/*.so .
+cp c++/*.so .
