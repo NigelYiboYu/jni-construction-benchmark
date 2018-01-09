@@ -12,4 +12,13 @@ echo "***********************************************"
 $JAVA -version
 echo "***********************************************"
 
-$JAVA  -cp . com.jni.consbench.Benchmark 100000000
+######################################
+# $1 is test type
+# $2 is optional warmup trigger
+######################################
+
+JIT_OPT=' -Xjit:verbose,vlog=vlog'
+rm -f vlog*
+
+testIter=300000000
+$JAVA  $JIT_OPT -cp . com.jni.consbench.Benchmark $testIter $1 $2
