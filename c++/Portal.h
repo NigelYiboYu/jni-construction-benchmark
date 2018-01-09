@@ -42,10 +42,11 @@ public:
 	// Get the field id of the member variable to store
 	// the ptr
 	static jfieldID getHandleFieldID(JNIEnv* env) {
+
+		// pragma convert is needed for string literals to be converted correctly on zOS
 #if defined(ZOS)
 #pragma convert(819)
 #endif
-
 		static jfieldID fid = env->GetFieldID(DERIVED::getJClass(env), "_nativeHandle", "J");
 #if defined(ZOS)
 #pragma convert(0)
