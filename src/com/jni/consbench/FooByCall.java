@@ -24,33 +24,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.evolvedbinary.jni.consbench;
+package com.jni.consbench;
 
 /**
- * 
- * AutoCloseable call the close() methosd automatically when exiting a
- * try-with-resource block.
+ * Follows <i>9.2.3 Pattern 1: Call</i> from Java Platform Performance by Steve Wilson
+ * for setting up the handle to the native object
  */
-public abstract class NativeBackedObject implements AutoCloseable {
+public class FooByCall extends NativeBackedObject {
+    public FooByCall() {
+        super();
+        this._nativeHandle = newFoo();
+    }
 
-	protected long _nativeHandle;
-	protected boolean _nativeOwner;
+    @Override
+    protected void disposeInternal() {
+        disposeInternal(_nativeHandle);
+    }
 
-	protected NativeBackedObject() {
-		this._nativeHandle = 0;
-		this._nativeOwner = true;
-	}
-
-	@Override
-	public void close() {
-		synchronized (this) {
-			if (_nativeOwner && _nativeHandle != 0) {
-				disposeInternal();
-				_nativeHandle = 0;
-				_nativeOwner = false;
-			}
-		}
-	}
-
-	protected abstract void disposeInternal();
+    private native long newFoo();
+    private native void disposeInternal(final long handle);
 }

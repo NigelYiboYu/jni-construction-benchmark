@@ -5,8 +5,11 @@ JAVA=/jit/team/yunigel/sdk/bin/java
 JAVA="/jit/team/yunigel/openJDK9/jdk-9+181/bin/java"
 
 
+echo "***********************************************"
+echo "*		Testing this java"
+echo "***********************************************"
 
-echo Testing this java
 $JAVA -version
+echo "***********************************************"
 
-$JAVA  -cp . com.evolvedbinary.jni.consbench.Benchmark 100000000
+$JAVA  -cp . com.jni.consbench.Benchmark 100000000

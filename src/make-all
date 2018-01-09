@@ -13,23 +13,23 @@ export JAVAH="/jit/team/yunigel/openJDK9/jdk-9+181/bin/javah"
 
 
 echo "javac all java files"
-rm -f com/evolvedbinary/jni/consbench/*.class
-$JAVAC com/evolvedbinary/jni/consbench/*.java
+rm -f com/jni/consbench/*.class
+$JAVAC com/jni/consbench/*.java
 rm -f ./*.so
 
 
 echo "Creating JNI header files with javah"
 rm -f ./*.h
 
-$JAVAH com.evolvedbinary.jni.consbench.FooByCall
-$JAVAH com.evolvedbinary.jni.consbench.FooByCallStatic
-$JAVAH com.evolvedbinary.jni.consbench.FooByCallInvoke
+$JAVAH com.jni.consbench.FooByCall
+$JAVAH com.jni.consbench.FooByCallStatic
+$JAVAH com.jni.consbench.FooByCallInvoke
 
 
 
 echo "Compiling C++ code into shared lib"
-cd c++
+cd ../c++
 ./make-all-cpp
 
 cd $pwd
-cp c++/*.so .
+cp ../c++/*.so .

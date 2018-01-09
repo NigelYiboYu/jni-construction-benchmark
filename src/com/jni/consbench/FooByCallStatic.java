@@ -1,3 +1,4 @@
+package com.jni.consbench;
 /**
  * Copyright © 2016, Evolved Binary Ltd
  * All rights reserved.
@@ -24,51 +25,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include <assert.h>
 
-namespace consbench {
+/**
+ * Follows <i>9.2.3 Pattern 1: Call</i> from Java Platform Performance by Steve Wilson
+ * for setting up the handle to the native object
+ */
+public class FooByCallStatic extends NativeBackedObject {
+    public FooByCallStatic() {
+        super();
+        this._nativeHandle = newFoo();
+    }
 
-// Native class template
-template<class PTR, class DERIVED> class FooJniClass {
- public:
-  // Get the java class id
-  static jclass getJClass(JNIEnv* env, const char* jclazz_name) {
-    jclass jclazz = env->FindClass(jclazz_name);
-    assert(jclazz != nullptr);
-    return jclazz;
-  }
+    @Override
+    protected void disposeInternal() {
+        disposeInternal(_nativeHandle);
+    }
 
-  // Get the field id of the member variable to store
-  // the ptr
-  static jfieldID getHandleFieldID(JNIEnv* env) {
-    static jfieldID fid = env->GetFieldID(
-        DERIVED::getJClass(env), "_nativeHandle", "J");
-    assert(fid != nullptr);
-    return fid;
-  }
-
-  // Get the pointer from Java
-  static PTR getHandle(JNIEnv* env, jobject jobj) {
-    return reinterpret_cast<PTR>(
-        env->GetLongField(jobj, getHandleFieldID(env)));
-  }
-
-  // Pass the pointer to the java side.
-  static void setHandle(JNIEnv* env, jobject jdb, PTR ptr) {
-    env->SetLongField(
-        jdb, getHandleFieldID(env),
-        reinterpret_cast<jlong>(ptr));
-  }
-};
-
-
-// The portal class for com.evolvedbinary.jni.consbench.FooByCallInvoke
-class FooByCallInvokeJni : public FooJniClass<consbench::Foo*, FooByCallInvokeJni> {
- public:
-  static jclass getJClass(JNIEnv* env) {
-    return FooJniClass::getJClass(env,
-        "com/evolvedbinary/jni/consbench/FooByCallInvoke");
-  }
-};
-
-} //end namespace
+    private static native long newFoo();
+    private native void disposeInternal(final long handle);
+}

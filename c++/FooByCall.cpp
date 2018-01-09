@@ -24,23 +24,25 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.evolvedbinary.jni.consbench;
+#include <jni.h>
+#include "com_jni_consbench_FooByCall.h"
+#include "Foo.h"
 
-/**
- * Follows <i>9.2.3 Pattern 1: Call</i> from Java Platform Performance by Steve Wilson
- * for setting up the handle to the native object
+/*
+ * Class:     Java_com_jni_consbench_FooByCall_newFoo
+ * Method:    newFoo
+ * Signature: ()J
  */
-public class FooByCall extends NativeBackedObject {
-    public FooByCall() {
-        super();
-        this._nativeHandle = newFoo();
-    }
+jlong Java_com_jni_consbench_FooByCall_newFoo(JNIEnv* env, jobject jobj) {
+  consbench::Foo* foo = new consbench::Foo();
+  return reinterpret_cast<jlong>(foo);
+}
 
-    @Override
-    protected void disposeInternal() {
-        disposeInternal(_nativeHandle);
-    }
-
-    private native long newFoo();
-    private native void disposeInternal(final long handle);
+/*
+ * Class:     Java_com_jni_consbench_FooByCall_disposeInternal
+ * Method:    disposeInternal
+ * Signature: (J)V
+ */
+void Java_com_jni_consbench_FooByCall_disposeInternal(JNIEnv* env, jobject jobj, jlong handle) {
+    delete reinterpret_cast<consbench::Foo*>(handle);
 }

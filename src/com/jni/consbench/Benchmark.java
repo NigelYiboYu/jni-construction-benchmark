@@ -26,7 +26,7 @@
  */
 /**
  * */
-package com.evolvedbinary.jni.consbench;
+package com.jni.consbench;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -40,6 +40,7 @@ import java.util.Locale;
  */
 public class Benchmark {
 
+	// default to 1 million
 	private static long ITERATIONS = 1000000;
 
 	public final static void main(final String args[]) {
