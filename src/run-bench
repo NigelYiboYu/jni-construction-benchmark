@@ -1,4 +1,4 @@
-jvmmz6480sr6-20180108_01.zipexport LD_LIBRARY_PATH=`pwd`
+export LD_LIBRARY_PATH=`pwd`
 
 JAVA=/jit/team/yunigel/sdk/bin/java
 
