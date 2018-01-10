@@ -38,13 +38,14 @@ import java.util.Locale;
  *
  * @author Adam Retter <adam.retter@googlemail.com>
  */
-public class Benchmark {
+public class BenchmarkFooByCallInvoke {
 
 	// default to 1 million
 	private static long ITERATIONS = 1000000;
 	private static boolean warmup = true;
 
 	public final static void main(final String args[]) {
+		System.loadLibrary("jnibench");
 
 		if (args.length >= 1)
 			ITERATIONS = Long.parseLong(args[0]);
@@ -52,58 +53,35 @@ public class Benchmark {
 		if (args.length >= 2)
 			warmup = Integer.parseInt(args[1]) != 0;
 
-		System.out.println("Calling JNI from main() function.");
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
-
-		System.loadLibrary("jnibench");
-
-		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+		System.out.println("Only testing FooByCallInvoke() out of main " + (warmup ? "with warmup" : " no warmup"));
 
 		if (warmup) {
 			System.out.println("Warming up");
-			// TEST1 - Foo By Call
-			for (long j = 0; j < ITERATIONS; j++) {
-				final FooByCall fooByCall = new FooByCall();
-			}
-			
-			// TEST2 - Foo By Call Static
-			for (long j = 0; j < ITERATIONS; j++) {
-				final FooByCallStatic fooByCallStatic = new FooByCallStatic();
-			}
-			
-			// TEST3 - Foo By Call Invoke
-			for (long j = 0; j < ITERATIONS; j++) {
-				final FooByCallInvoke fooByCallInvoke = new FooByCallInvoke();
-			}
+			byCallInvokeLoop();
+			warmup = false;
 		}
 
-		// TEST1 - Foo By Call
-		System.out.println("Starting test FooByCall " + numberFormat.format(ITERATIONS) + " iterations");
-		final long start1 = System.currentTimeMillis();
-		for (long j = 0; j < ITERATIONS; j++) {
-			final FooByCall fooByCall = new FooByCall();
-		}
+		byCallInvokeLoop();
 
-		final long end1 = System.currentTimeMillis();
-		System.out.println("FooByCall: " + numberFormat.format(end1 - start1) + "ms\n\n");
-		
-		// TEST2 - Foo By Call Static
-		System.out.println("Starting test FooByCallStatic " + numberFormat.format(ITERATIONS) + " iterations");
-		final long start2 = System.currentTimeMillis();
-		for (long j = 0; j < ITERATIONS; j++) {
-			final FooByCallStatic fooByCallStatic = new FooByCallStatic();
-		}
+	}
 
-		final long end2 = System.currentTimeMillis();
-		System.out.println("FooByCallStatic: " + numberFormat.format(end2 - start2) + "ms\n\n");
+	private static void byCallInvokeLoop() {
+
+		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
 		// TEST3 - Foo By Call Invoke
-		System.out.println("Starting test FooByCallInvoke " + numberFormat.format(ITERATIONS) + " iterations");
+		if (!warmup)
+			System.out.println("Starting test FooByCallInvoke " + numberFormat.format(ITERATIONS) + " iterations");
+
 		final long start3 = System.currentTimeMillis();
 		for (long j = 0; j < ITERATIONS; j++) {
 			final FooByCallInvoke fooByCallInvoke = new FooByCallInvoke();
 		}
 
 		final long end3 = System.currentTimeMillis();
-		System.out.println("FooByCallInvoke: " + numberFormat.format(end3 - start3) + "ms");
+
+		if (!warmup)
+			System.out.println("FooByCallInvoke: " + numberFormat.format(end3 - start3) + "ms");
 	}
 }
