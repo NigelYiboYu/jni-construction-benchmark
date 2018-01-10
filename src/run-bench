@@ -1,4 +1,4 @@
-export LD_LIBRARY_PATH=`pwd`
+jvmmz6480sr6-20180108_01.zipexport LD_LIBRARY_PATH=`pwd`
 
 JAVA=/jit/team/yunigel/sdk/bin/java
 
@@ -21,4 +21,16 @@ JIT_OPT=' -Xjit:verbose,vlog=vlog'
 rm -f vlog*
 
 testIter=300000000
+
+#
+# Native calls not in the main() function
+#
+
 $JAVA  $JIT_OPT -cp . com.jni.consbench.Benchmark $testIter $1 $2
+
+
+#
+# Native calls made in the main() function
+#
+
+#$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMain $testIter $1 $2

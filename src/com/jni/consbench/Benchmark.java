@@ -90,7 +90,16 @@ public class Benchmark {
 
 			byCallInvokeLoop();
 		} else {
+			if (warmup) {
+				System.out.println("Warming up");
+
+				byCallLoop();
+				byCallStaticLoop();
+				byCallInvokeLoop();
+			}
+
 			warmup = false;
+
 			byCallLoop();
 			byCallStaticLoop();
 			byCallInvokeLoop();
