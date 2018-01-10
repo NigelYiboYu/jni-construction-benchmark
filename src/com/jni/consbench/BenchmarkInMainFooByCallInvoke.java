@@ -52,11 +52,10 @@ public class BenchmarkInMainFooByCallInvoke {
 
 		if (args.length >= 2)
 			warmup = Integer.parseInt(args[1]) != 0;
-		
+
 		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
-		System.out.println("Only testing FooByCallInvoke in main, " + (warmup ? "with warmup" : "no warmup"));
 
 		if (warmup) {
 			// TEST3 - Foo By Call Invoke
@@ -73,7 +72,8 @@ public class BenchmarkInMainFooByCallInvoke {
 		}
 
 		final long end3 = System.currentTimeMillis();
-		System.out.println("FooByCallInvoke: " + numberFormat.format(end3 - start3) + "ms");
+		System.out.println("FooByCallInvoke in main " + (warmup ? "warmup " : "no warmup ")
+				+ numberFormat.format(end3 - start3) + "ms");
 
 	}
 }

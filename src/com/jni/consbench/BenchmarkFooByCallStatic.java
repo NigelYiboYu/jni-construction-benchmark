@@ -56,20 +56,18 @@ public class BenchmarkFooByCallStatic {
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
 		System.out.println("Only testing FooByCallStatic() out of main " + (warmup ? "with warmup" : " no warmup"));
 
-		if (warmup) {
-			byCallStaticLoop();
-			warmup = false;
-		}
+		if (warmup)
+			byCallStaticLoop(false);
 
-		byCallStaticLoop();
+		byCallStaticLoop(true);
 	}
 
-	private static void byCallStaticLoop() {
+	private static void byCallStaticLoop(boolean doPrint) {
 
 		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
 		// TEST2 - Foo By Call Static
-		if (!warmup)
+		if (doPrint)
 			System.out.println("Starting test FooByCallStatic " + numberFormat.format(ITERATIONS) + " iterations");
 
 		final long start2 = System.currentTimeMillis();
@@ -79,8 +77,9 @@ public class BenchmarkFooByCallStatic {
 
 		final long end2 = System.currentTimeMillis();
 
-		if (!warmup)
-			System.out.println("FooByCallStatic: " + numberFormat.format(end2 - start2) + "ms\n\n");
+		if (doPrint)
+			System.out.println("FooByCallStatic out of main " + (warmup ? "warmup " : " no warmup ")
+					+ numberFormat.format(end2 - start2) + "ms\n\n");
 
 	}
 }

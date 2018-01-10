@@ -56,22 +56,19 @@ public class BenchmarkFooByCallInvoke {
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
 		System.out.println("Only testing FooByCallInvoke() out of main " + (warmup ? "with warmup" : " no warmup"));
 
-		if (warmup) {
-			System.out.println("Warming up");
-			byCallInvokeLoop();
-			warmup = false;
-		}
+		if (warmup)
+			byCallInvokeLoop(false);
 
-		byCallInvokeLoop();
+		byCallInvokeLoop(true);
 
 	}
 
-	private static void byCallInvokeLoop() {
+	private static void byCallInvokeLoop(boolean doPrint) {
 
 		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
 		// TEST3 - Foo By Call Invoke
-		if (!warmup)
+		if (doPrint)
 			System.out.println("Starting test FooByCallInvoke " + numberFormat.format(ITERATIONS) + " iterations");
 
 		final long start3 = System.currentTimeMillis();
@@ -81,7 +78,8 @@ public class BenchmarkFooByCallInvoke {
 
 		final long end3 = System.currentTimeMillis();
 
-		if (!warmup)
-			System.out.println("FooByCallInvoke: " + numberFormat.format(end3 - start3) + "ms");
+		if (doPrint)
+			System.out.println("FooByCallInvoke out of main " + (warmup ? "warmup " : "no warmup ")
+					+ numberFormat.format(end3 - start3) + "ms");
 	}
 }

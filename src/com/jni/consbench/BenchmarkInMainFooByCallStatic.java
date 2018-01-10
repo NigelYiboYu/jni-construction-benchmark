@@ -73,6 +73,7 @@ public class BenchmarkInMainFooByCallStatic {
 		}
 
 		final long end2 = System.currentTimeMillis();
-		System.out.println("FooByCallStatic: " + numberFormat.format(end2 - start2) + "ms\n\n");
+		System.out.println("FooByCallStatic in main " + (warmup ? "warmup " : "no warmup ")
+				+ numberFormat.format(end2 - start2) + "ms\n\n");
 	}
 }
