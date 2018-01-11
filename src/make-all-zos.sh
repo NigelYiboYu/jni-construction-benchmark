@@ -1,17 +1,12 @@
-
-pwd=`pwd`
-
+export IBM_JAVA_HOME="/jit/team/yunigel/sdk"
 
 # use lower version of java to compile
-export JAVA=/jit/team/yunigel/sdk/bin/java
-export JAVAC=/jit/team/yunigel/sdk/bin/javac
-export JAVAH=/jit/team/yunigel/sdk/bin/javah
+export JAVA="$IBM_JAVA_HOME/bin/java"
+export JAVAC="$IBM_JAVA_HOME/bin/javac"
+export JAVAH="$IBM_JAVA_HOME/bin/javah"
 
 
-#export JAVA="/jit/team/yunigel/openJDK9/jdk-9+181/bin/java"
-#export JAVAC="/jit/team/yunigel/openJDK9/jdk-9+181/bin/javac"
-#export JAVAH="/jit/team/yunigel/openJDK9/jdk-9+181/bin/javah"
-
+pwd=`pwd`
 
 echo "javac all java files"
 rm -f com/jni/consbench/*.class
@@ -30,7 +25,7 @@ $JAVAH com.jni.consbench.FooByCallInvoke
 
 echo "Compiling C++ code into shared lib"
 cd ../c++
-./make-all-cpp
+./make-all-cpp-zos.sh
 
 cd $pwd
 cp ../c++/*.so .
