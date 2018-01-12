@@ -11,7 +11,7 @@ PROF_LOG_NAME=profile-run.log
 
 while true; do
 
-	grep -iq 'starting benchmark' $PROF_LOG_NAME
+	grep -iq 'Starting test FooByCall 3' $PROF_LOG_NAME
 
    	if [ $? -eq 0 ]; then
       	break
