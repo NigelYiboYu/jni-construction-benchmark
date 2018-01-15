@@ -1,12 +1,11 @@
-
 #include <assert.h>
-#include "./nativebacked/Foo.h"
+#include "./nativeobj/Foo.h"
 
-namespace consbench {
+namespace jnibench {
 
 // Native class template
 template<class PTR, class DERIVED>
-class FooJniClass {
+class JniPortal {
 public:
 	// Get the java class id
 	static jclass getJClass(JNIEnv* env, const char* jclazz_name) {
@@ -17,18 +16,11 @@ public:
 
 	// Get the field id of the member variable to store
 	// the ptr
-	static jfieldID getHandleFieldID(JNIEnv* env) {
+	static jfieldID getHandleFieldID(JNIEnv* env, const char* fieldName,
+			const char* fieldType) {
 
 		static jfieldID fid = env->GetFieldID(DERIVED::getJClass(env),
-				"_nativeHandle", "J");
-		assert(fid != nullptr);
-		return fid;
-	}
-
-	static jfieldID getJavaHandleFieldID(JNIEnv* env) {
-
-		static jfieldID fid = env->GetFieldID(DERIVED::getJClass(env),
-				"_javaObjHandle", "J");
+				fieldName, fieldType);
 		assert(fid != nullptr);
 		return fid;
 	}
@@ -39,43 +31,61 @@ public:
 				getHandleFieldID(env)));
 	}
 
-	// Pass the pointer to the java side.
-	static void setHandle(JNIEnv* env, jobject jdb, PTR ptr) {
-		env->SetLongField(jdb, getHandleFieldID(env),
+	// Pass the pointer to the java object field as a long
+	static void setLongHandle(JNIEnv* env, jobject jdb, PTR ptr,
+			const char* fieldName) {
+		env->SetLongField(jdb, getHandleFieldID(env, fieldName, "J"),
 				reinterpret_cast<jlong>(ptr));
 	}
-};
 
-/**
- *
- *
- *   The portal class for com.jni.consbench.nativebacked.FooByCallInvoke
- *
- * */
-class FooByCallInvokeJni: public FooJniClass<consbench::Foo*, FooByCallInvokeJni> {
-public:
-	static jclass getJClass(JNIEnv* env) {
-		return FooJniClass<consbench::Foo*, FooByCallInvokeJni>::getJClass(env,
-				"com/jni/consbench/nativebacked/FooByCallInvoke");
+	// Pass the pointer to the java object field as a long
+	static void setStaticLongHandle(JNIEnv* env, jclass jcls, PTR ptr,
+			const char* fieldName) {
+		jfieldID fid = env->GetStaticFieldID(jcls, fieldName, "J");
+		env->SetStaticLongField(jcls, fid, reinterpret_cast<jlong>(ptr));
 	}
 };
 
-
 /**
- *
- *
- *  The portal class for com.jni.consbench.javabacked.FooByCallInvoke
- *
- *
- *  Note: the consbench::Foo* in the template is not needed...
+ *   The portal class for com.jni.consbench.nativeobj.FooByCallInvoke
  *
  * */
-class FooByCallInvokeJniJavaBacked: public FooJniClass<void*,
-		FooByCallInvokeJniJavaBacked> {
+class FooByCallInvokeJni: public JniPortal<jnibench::Foo*, FooByCallInvokeJni> {
 public:
 	static jclass getJClass(JNIEnv* env) {
-		return FooJniClass<void*, FooByCallInvokeJniJavaBacked>::getJClass(
-				env, "com/jni/consbench/javabacked/FooByCallInvoke");
+		return JniPortal<jnibench::Foo*, FooByCallInvokeJni>::getJClass(env,
+				"com/jni/consbench/nativeobj/FooByCallInvoke");
+	}
+};
+
+/**
+ *  The portal class for com.jni.consbench.javaobj.FooByCallInvoke
+ *
+ *
+ *  Note: the jnibench::Foo* in the template is not needed...
+ *
+ * */
+class FooByCallInvokeJniJavaObj: public JniPortal<void*,
+		FooByCallInvokeJniJavaObj> {
+public:
+	static jclass getJClass(JNIEnv* env) {
+		return JniPortal<void*, FooByCallInvokeJniJavaObj>::getJClass(env,
+				"com/jni/consbench/javaobj/FooByCallInvoke");
+	}
+};
+
+/**
+ *  The portal class for com.jni.consbench.javaobj.FooByCallInvoke
+ *
+ *
+ *  Note: the jnibench::Foo* in the template is not needed...
+ *
+ * */
+class SimpleCallPortal: public JniPortal<void*, SimpleCallPortal> {
+public:
+	static jclass getJClass(JNIEnv* env) {
+		return JniPortal<void*, SimpleCallPortal>::getJClass(env,
+				"com/jni/consbench/simpleCall/SimpleCalls");
 	}
 };
 

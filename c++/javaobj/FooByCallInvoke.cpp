@@ -1,0 +1,22 @@
+#include <jni.h>
+#include "com_jni_consbench_javaobj_FooByCallInvoke.h"
+#include "../Portal.h"
+
+/*
+ * Class:     Java_com_jni_consbench_javabacked_FooByCallInvoke_newFoo
+ * Method:    newFoo
+ * Signature: ()J
+ */
+void Java_com_jni_consbench_javaobj_FooByCallInvoke_newFoo(JNIEnv* env,
+		jobject jobj) {
+
+	// create a java obj via JNI and retrun the _javaObjHandle in Java
+	jclass newCls = env->FindClass("com/jni/consbench/javaobj/FooJavaObject");
+
+	jmethodID initMethod = env->GetMethodID(newCls, "<init>", "()V");
+	jobject newObj = env->NewObject(newCls, initMethod);
+
+	jnibench::FooByCallInvokeJniJavaObj::setLongHandle(env, jobj,
+			reinterpret_cast<void*>(newObj), "_javaObjHandle");
+	return;
+}

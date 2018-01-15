@@ -1,0 +1,6 @@
+
+
+
+scp -r src yunigel@torlinxq:/jit/team/yunigel/jni-bench
+
+scp -r c++ yunigel@torlinxq:/jit/team/yunigel/jni-bench

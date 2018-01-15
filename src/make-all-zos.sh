@@ -13,17 +13,22 @@ pwd=`pwd`
 #			Creating JNI header files with javah
 #############################################################
 echo "javac all java files"
-rm -f com/jni/consbench/javabacked/*.class
-rm -f com/jni/consbench/nativebacked/*.class
-rm -f com/jni/consbench/nativebacked/bench/*.class
-rm -f com/jni/consbench/nativebacked/bench/*.class
+rm -f com/jni/consbench/javaobj/*.class
+rm -f com/jni/consbench/javaobj/bench/*.class
+
+rm -f com/jni/consbench/nativeobj/*.class
+rm -f com/jni/consbench/nativeobj/bench/*.class
+
+rm -f com/jni/consbench/simpleCall/*.class
 
 
+$JAVAC com/jni/consbench/javaobj/*.java
+$JAVAC com/jni/consbench/javaobj/bench/*.java
 
-$JAVAC com/jni/consbench/javabacked/*.java
-$JAVAC com/jni/consbench/nativebacked/*.java
-$JAVAC com/jni/consbench/nativebacked/bench/*.java
-$JAVAC com/jni/consbench/nativebacked/bench/*.java
+$JAVAC com/jni/consbench/nativeobj/*.java
+$JAVAC com/jni/consbench/nativeobj/bench/*.java
+
+$JAVAC com/jni/consbench/simpleCall/*.java
 
 
 rm -f ./*.so
@@ -35,14 +40,15 @@ rm -f ./*.so
 echo "Creating JNI header files with javah"
 rm -f ./*.h
 
-$JAVAH com.jni.consbench.javabacked.FooByCall
-$JAVAH com.jni.consbench.javabacked.FooByCallStatic
-$JAVAH com.jni.consbench.javabacked.FooByCallInvoke
+$JAVAH com.jni.consbench.javaobj.FooByCall
+$JAVAH com.jni.consbench.javaobj.FooByCallStatic
+$JAVAH com.jni.consbench.javaobj.FooByCallInvoke
 
-$JAVAH com.jni.consbench.nativebacked.FooByCall
-$JAVAH com.jni.consbench.nativebacked.FooByCallStatic
-$JAVAH com.jni.consbench.nativebacked.FooByCallInvoke
+$JAVAH com.jni.consbench.nativeobj.FooByCall
+$JAVAH com.jni.consbench.nativeobj.FooByCallStatic
+$JAVAH com.jni.consbench.nativeobj.FooByCallInvoke
 
+$JAVAH com.jni.consbench.simpleCall.SimpleCalls
 
 #############################################################
 #

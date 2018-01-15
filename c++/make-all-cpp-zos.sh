@@ -8,6 +8,7 @@ export CXXFLAGS=" -Wc,convlit(ISO8859-1) -Wc,NOANSIALIAS -Wc,xplink -O3 -qlanglv
 
 
 xlC $CXXFLAGS -o libjnibench.so $INC_PATH \
-	./nativebacked/Foo.cpp ./nativebacked/FooByCall.cpp \
-	./nativebacked/FooByCallStatic.cpp ./nativebacked/FooByCallInvoke.cpp \
-	./javabacked/FooByCall.cpp ./javabacked/FooByCallStatic.cpp ./javabacked/FooByCallInvoke.cpp  
+	./nativeobj/Foo.cpp ./nativeobj/FooByCall.cpp \
+	./nativeobj/FooByCallStatic.cpp ./nativeobj/FooByCallInvoke.cpp \
+	./javaobj/FooByCall.cpp ./javaobj/FooByCallStatic.cpp ./javaobj/FooByCallInvoke.cpp \
+	./simplecall/SimpleCall.cpp  
