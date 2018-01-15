@@ -8,5 +8,11 @@
  */
 jlong Java_com_jni_consbench_javabacked_FooByCallStatic_newFoo(JNIEnv* env,
 		jclass jcls) {
-	return 0;
+
+	// create a java obj via JNI and retrun the _javaObjHandle in Java
+	jclass newCls = env->FindClass("com/jni/consbench/javabacked/FooJavaObject");
+	jmethodID initMethod = env->GetMethodID(newCls, "<init>", "()V");
+	jobject newObj = env->NewObject(newCls, initMethod);
+
+	return reinterpret_cast<jlong>(newObj);
 }

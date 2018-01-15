@@ -5,13 +5,6 @@ import java.util.Locale;
 
 import com.jni.consbench.javabacked.FooByCall;
 
-/**
- *
- * A small JNI Benchmark to show the difference in cost between various models
- * of Object Construction for a Java API that wraps a C++ API using JNI
- *
- * @author Adam Retter <adam.retter@googlemail.com>
- */
 public class BenchmarkFooByCall {
 
 	// default to 1 million
@@ -28,7 +21,7 @@ public class BenchmarkFooByCall {
 			warmup = Integer.parseInt(args[1]) != 0;
 
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
-		System.out.println("Only testing FooByCall() out of main " + (warmup ? "with warmup" : " no warmup"));
+		System.out.println("Only testing FooByCall() javabacked out of main " + (warmup ? "with warmup" : " no warmup"));
 
 		if (warmup)
 			byCallLoop(false);

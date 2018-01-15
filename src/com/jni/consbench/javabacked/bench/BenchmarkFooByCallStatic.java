@@ -22,7 +22,7 @@ public class BenchmarkFooByCallStatic {
 			warmup = Integer.parseInt(args[1]) != 0;
 
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
-		System.out.println("Only testing FooByCallStatic() out of main " + (warmup ? "with warmup" : " no warmup"));
+		System.out.println("Only testing FooByCallStatic() javabacked out of main " + (warmup ? "with warmup" : " no warmup"));
 
 		if (warmup)
 			byCallStaticLoop(false);
