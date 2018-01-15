@@ -8,6 +8,10 @@ export JAVAH="$IBM_JAVA_HOME/bin/javah"
 
 pwd=`pwd`
 
+#############################################################
+#
+#			Creating JNI header files with javah
+#############################################################
 echo "javac all java files"
 rm -f com/jni/consbench/javabacked/*.class
 rm -f com/jni/consbench/nativebacked/*.class
@@ -24,7 +28,10 @@ $JAVAC com/jni/consbench/nativebacked/bench/*.java
 
 rm -f ./*.so
 
-
+#############################################################
+#
+#			Creating JNI header files with javah
+#############################################################
 echo "Creating JNI header files with javah"
 rm -f ./*.h
 
@@ -37,6 +44,10 @@ $JAVAH com.jni.consbench.nativebacked.FooByCallStatic
 $JAVAH com.jni.consbench.nativebacked.FooByCallInvoke
 
 
+#############################################################
+#
+#			Compiling C++ code into shared lib
+#############################################################
 
 echo "Compiling C++ code into shared lib"
 cd ../c++
@@ -44,3 +55,18 @@ cd ../c++
 
 cd $pwd
 cp ../c++/*.so .
+
+
+#############################################################
+#					Patch the SDK
+#
+#############################################################
+
+if [ -d "$IBM_JAVA_HOME/jre/lib/s390x/compressedrefs" ]; then
+	cp -v ./*.so $IBM_JAVA_HOME/jre/lib/s390x/compressedrefs/
+fi
+
+
+if [ -d "$IBM_JAVA_HOME/lib/s390x/compressedrefs" ]; then
+	cp -v ./*.so $IBM_JAVA_HOME/lib/s390x/compressedrefs/
+fi
