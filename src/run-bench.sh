@@ -41,11 +41,11 @@ while [ $counter -lt $maxIter ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkFooByCall $testIter $doWarmup
+	$JAVA  $JIT_OPT -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkFooByCall $testIter $doWarmup
+	$JAVA  $JIT_OPT -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter $doWarmup
 	
 	#
 	# test 2
@@ -53,11 +53,11 @@ while [ $counter -lt $maxIter ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkFooByCallStatic $testIter $doWarmup
+	$JAVA  $JIT_OPT -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCallStatic $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkFooByCallStatic $testIter $doWarmup
+	$JAVA  $JIT_OPT -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCallStatic $testIter $doWarmup
 	
 	
 	#
@@ -66,54 +66,11 @@ while [ $counter -lt $maxIter ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkFooByCallInvoke $testIter $doWarmup
+	$JAVA  $JIT_OPT -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCallInvoke $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkFooByCallInvoke $testIter $doWarmup
-	
-	
-
-
-
-
-
-	#
-	# test 4
-	#
-	
-	JAVA=$IBM_JAVA
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMainFooByCall $testIter $doWarmup
-	
-	JAVA=$OPENJDK_JAVA
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMainFooByCall $testIter $doWarmup
-	
-	#
-	# test 5
-	#
-	
-	JAVA=$IBM_JAVA
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMainFooByCallStatic $testIter $doWarmup
-	
-	JAVA=$OPENJDK_JAVA
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMainFooByCallStatic $testIter $doWarmup
-	
-	
-	#
-	# test 6
-	#
-	
-	JAVA=$IBM_JAVA
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMainFooByCallInvoke $testIter $doWarmup
-	
-	JAVA=$OPENJDK_JAVA
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMainFooByCallInvoke $testIter $doWarmup
+	$JAVA  $JIT_OPT -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCallInvoke $testIter $doWarmup
 
 done
 
@@ -131,11 +88,11 @@ while [ $counter -lt $maxIter ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkFooByCall $testIter $doWarmup
+	$JAVA  $JIT_OPT -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkFooByCall $testIter $doWarmup
+	$JAVA  $JIT_OPT -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter $doWarmup
 	
 	#
 	# test 2
@@ -143,11 +100,11 @@ while [ $counter -lt $maxIter ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkFooByCallStatic $testIter $doWarmup
+	$JAVA  $JIT_OPT -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCallStatic $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkFooByCallStatic $testIter $doWarmup
+	$JAVA  $JIT_OPT -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCallStatic $testIter $doWarmup
 	
 	
 	#
@@ -156,53 +113,11 @@ while [ $counter -lt $maxIter ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkFooByCallInvoke $testIter $doWarmup
+	$JAVA  $JIT_OPT -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCallInvoke $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkFooByCallInvoke $testIter $doWarmup
+	$JAVA  $JIT_OPT -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCallInvoke $testIter $doWarmup
 	
-	
-
-
-
-
-
-	#
-	# test 4
-	#
-	
-	JAVA=$IBM_JAVA
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMainFooByCall $testIter $doWarmup
-	
-	JAVA=$OPENJDK_JAVA
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMainFooByCall $testIter $doWarmup
-	
-	#
-	# test 5
-	#
-	
-	JAVA=$IBM_JAVA
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMainFooByCallStatic $testIter $doWarmup
-	
-	JAVA=$OPENJDK_JAVA
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMainFooByCallStatic $testIter $doWarmup
-	
-	
-	#
-	# test 6
-	#
-	
-	JAVA=$IBM_JAVA
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMainFooByCallInvoke $testIter $doWarmup
-	
-	JAVA=$OPENJDK_JAVA
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.BenchmarkInMainFooByCallInvoke $testIter $doWarmup
 
 done

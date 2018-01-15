@@ -29,9 +29,10 @@ JIT_OPT=' -Xjit:verbose,vlog=vlog'
 JIT_OPT=''
 
 
-#
-#	patch SDK
-#
+#######################################################
+#					patch SDK
+#######################################################
+
 cp $TOOLS_DIR/libjprof.so $IBM_SDK/jre/lib/s390x/compressedrefs/libjprof.so
 cp $TOOLS_DIR/libjprof.so $IBM_SDK/lib/s390x/compressedrefs/libjprof.so
 
@@ -49,4 +50,4 @@ JAVA=$IBM_JAVA
 
 
 sleep 10
-$JAVA  $JIT_OPT -Xdump:tool:events=vmstop,exec='sleep 10000' $AGENT_OPT  -cp . com.jni.consbench.BenchmarkFooByCall $testIter 0
+$JAVA  $JIT_OPT -Xdump:tool:events=vmstop,exec='sleep 10000' $AGENT_OPT  -cp . com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter 0
