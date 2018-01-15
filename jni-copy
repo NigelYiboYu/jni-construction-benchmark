@@ -1,0 +1,6 @@
+
+
+
+scp -r src tsjit@zoscan09:/jit/team/yunigel/jni-bench
+
+scp -r c++ tsjit@zoscan09:/jit/team/yunigel/jni-bench

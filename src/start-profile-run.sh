@@ -21,17 +21,19 @@ rm -f vlog*
 IBM_SDK="/jit/team/yunigel/sdk"
 IBM_JAVA="$IBM_SDK/bin/java"
 
-#
-#	patch SDK
-#
-
-cp $TOOLS_DIR/../jprof/libjprof64.so $IBM_SDK/jre/lib/s390x/compressedrefs/libjprof.so
 
 
 AGENT_OPT='-agentlib:jprof=tprof,pidx,asid,LOGPATH=/jit/instrumentation/handson/results,LOGPREFIX=jprof'
-
+JVM_OPT=" -Xdump:none "
 JIT_OPT=' -Xjit:verbose,vlog=vlog'
 JIT_OPT=''
+
+
+#
+#	patch SDK
+#
+cp $TOOLS_DIR/libjprof.so $IBM_SDK/jre/lib/s390x/compressedrefs/libjprof.so
+cp $TOOLS_DIR/libjprof.so $IBM_SDK/lib/s390x/compressedrefs/libjprof.so
 
 echo "***********************************************************"
 echo "*         Testing this java"

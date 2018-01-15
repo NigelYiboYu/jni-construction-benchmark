@@ -24,62 +24,34 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/**
- * */
-package com.jni.consbench;
 
-import java.text.NumberFormat;
-import java.util.Locale;
+package com.jni.consbench.nativebacked;
 
 /**
- *
- * A small JNI Benchmark to show the difference in cost between various models
- * of Object Construction for a Java API that wraps a C++ API using JNI
- *
- * @author Adam Retter <adam.retter@googlemail.com>
+ * 
+ * AutoCloseable call the close() methods automatically when exiting a
+ * try-with-resource block.
  */
-public class BenchmarkFooByCallStatic {
+public abstract class NativeBackedObject implements AutoCloseable {
 
-	// default to 1 million
-	private static long ITERATIONS = 1000000;
-	private static boolean warmup = true;
+	protected long _nativeHandle;
+	protected boolean _nativeOwner;
 
-	public final static void main(final String args[]) {
-		System.loadLibrary("jnibench");
-
-		if (args.length >= 1)
-			ITERATIONS = Long.parseLong(args[0]);
-
-		if (args.length >= 2)
-			warmup = Integer.parseInt(args[1]) != 0;
-
-		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
-		System.out.println("Only testing FooByCallStatic() out of main " + (warmup ? "with warmup" : " no warmup"));
-
-		if (warmup)
-			byCallStaticLoop(false);
-
-		byCallStaticLoop(true);
+	protected NativeBackedObject() {
+		this._nativeHandle = 0;
+		this._nativeOwner = true;
 	}
 
-	private static void byCallStaticLoop(boolean doPrint) {
-
-		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
-
-		// TEST2 - Foo By Call Static
-		if (doPrint)
-			System.out.println("Starting test FooByCallStatic " + numberFormat.format(ITERATIONS) + " iterations");
-
-		final long start2 = System.currentTimeMillis();
-		for (long j = 0; j < ITERATIONS; j++) {
-			final FooByCallStatic fooByCallStatic = new FooByCallStatic();
+	@Override
+	public void close() {
+		synchronized (this) {
+			if (_nativeOwner && _nativeHandle != 0) {
+				disposeInternal();
+				_nativeHandle = 0;
+				_nativeOwner = false;
+			}
 		}
-
-		final long end2 = System.currentTimeMillis();
-
-		if (doPrint)
-			System.out.println("FooByCallStatic out of main " + (warmup ? "warmup " : " no warmup ")
-					+ numberFormat.format(end2 - start2) + "ms\n\n");
-
 	}
+
+	protected abstract void disposeInternal();
 }

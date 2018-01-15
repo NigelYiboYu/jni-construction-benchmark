@@ -24,34 +24,25 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#include <jni.h>
+#include "com_jni_consbench_nativebacked_FooByCall.h"
+#include "Foo.h"
 
-package com.jni.consbench;
-
-/**
- * 
- * AutoCloseable call the close() methosd automatically when exiting a
- * try-with-resource block.
+/*
+ * Class:     Java_com_jni_consbench_FooByCall_newFoo
+ * Method:    newFoo
+ * Signature: ()J
  */
-public abstract class NativeBackedObject implements AutoCloseable {
+jlong Java_com_jni_consbench_nativebacked_FooByCall_newFoo(JNIEnv* env, jobject jobj) {
+  consbench::Foo* foo = new consbench::Foo();
+  return reinterpret_cast<jlong>(foo);
+}
 
-	protected long _nativeHandle;
-	protected boolean _nativeOwner;
-
-	protected NativeBackedObject() {
-		this._nativeHandle = 0;
-		this._nativeOwner = true;
-	}
-
-	@Override
-	public void close() {
-		synchronized (this) {
-			if (_nativeOwner && _nativeHandle != 0) {
-				disposeInternal();
-				_nativeHandle = 0;
-				_nativeOwner = false;
-			}
-		}
-	}
-
-	protected abstract void disposeInternal();
+/*
+ * Class:     Java_com_jni_consbench_FooByCall_disposeInternal
+ * Method:    disposeInternal
+ * Signature: (J)V
+ */
+void Java_com_jni_consbench_nativebacked_FooByCall_disposeInternal(JNIEnv* env, jobject jobj, jlong handle) {
+    delete reinterpret_cast<consbench::Foo*>(handle);
 }

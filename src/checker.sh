@@ -29,3 +29,14 @@ starti
 sleep $PROF_DURATION
 
 stopi
+
+
+javaPid=`ps -a | grep -i java | awk '{print $1}'`
+echo 'Killing java process' $javaPid
+kill -9 $javaPid
+
+
+gcServerPid=`ps -a | grep -i GCServer | awk {print $1}`
+echo 'Killing GC server process' $gcServerPid
+kill -9 $gcServerPid
+

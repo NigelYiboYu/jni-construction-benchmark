@@ -25,6 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include <assert.h>
+#include "./nativebacked/Foo.h"
 
 namespace consbench {
 
@@ -43,7 +44,16 @@ public:
 	// the ptr
 	static jfieldID getHandleFieldID(JNIEnv* env) {
 
-		static jfieldID fid = env->GetFieldID(DERIVED::getJClass(env), "_nativeHandle", "J");
+		static jfieldID fid = env->GetFieldID(DERIVED::getJClass(env),
+				"_nativeHandle", "J");
+		assert(fid != nullptr);
+		return fid;
+	}
+
+	static jfieldID getJavaHandleFieldID(JNIEnv* env) {
+
+		static jfieldID fid = env->GetFieldID(DERIVED::getJClass(env),
+				"_javaObjHandle", "J");
 		assert(fid != nullptr);
 		return fid;
 	}
@@ -61,11 +71,36 @@ public:
 	}
 };
 
-// The portal class for com.jni.consbench.FooByCallInvoke
+/**
+ *
+ *
+ *   The portal class for com.jni.consbench.nativebacked.FooByCallInvoke
+ *
+ * */
 class FooByCallInvokeJni: public FooJniClass<consbench::Foo*, FooByCallInvokeJni> {
 public:
 	static jclass getJClass(JNIEnv* env) {
-		return FooJniClass<consbench::Foo*, FooByCallInvokeJni>::getJClass(env, "com/jni/consbench/FooByCallInvoke");
+		return FooJniClass<consbench::Foo*, FooByCallInvokeJni>::getJClass(env,
+				"com/jni/consbench/nativebacked/FooByCallInvoke");
+	}
+};
+
+
+/**
+ *
+ *
+ *  The portal class for com.jni.consbench.javabacked.FooByCallInvoke
+ *
+ *
+ *  Note: the consbench::Foo* in the template is not needed...
+ *
+ * */
+class FooByCallInvokeJniJavaBacked: public FooJniClass<consbench::Foo*,
+		FooByCallInvokeJniJavaBacked> {
+public:
+	static jclass getJClass(JNIEnv* env) {
+		return FooJniClass<consbench::Foo*, FooByCallInvokeJniJavaBacked>::getJClass(
+				env, "com/jni/consbench/javabacked/FooByCallInvoke");
 	}
 };
 

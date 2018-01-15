@@ -26,10 +26,12 @@
  */
 /**
  * */
-package com.jni.consbench;
+package com.jni.consbench.nativebacked.bench;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import com.jni.consbench.nativebacked.FooByCallStatic;
 
 /**
  *
@@ -38,7 +40,7 @@ import java.util.Locale;
  *
  * @author Adam Retter <adam.retter@googlemail.com>
  */
-public class BenchmarkFooByCall {
+public class BenchmarkInMainFooByCallStatic {
 
 	// default to 1 million
 	private static long ITERATIONS = 1000000;
@@ -54,33 +56,26 @@ public class BenchmarkFooByCall {
 			warmup = Integer.parseInt(args[1]) != 0;
 
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
-		System.out.println("Only testing FooByCall() out of main " + (warmup ? "with warmup" : " no warmup"));
-
-		if (warmup)
-			byCallLoop(false);
-
-		byCallLoop(true);
-	}
-
-	private static void byCallLoop(boolean doPrint) {
+		System.out.println("Only testing FooByCallStatic in main, " + (warmup ? "with warmup" : "no warmup"));
 
 		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
-		// TEST1 - Foo By Call
-		if (doPrint)
-			System.out.println("Starting test FooByCall " + numberFormat.format(ITERATIONS) + " iterations");
-
-		final long start1 = System.currentTimeMillis();
-		for (long j = 0; j < ITERATIONS; j++) {
-			final FooByCall fooByCall = new FooByCall();
+		if (warmup) {
+			// TEST2 - Foo By Call Static
+			for (long j = 0; j < ITERATIONS; j++) {
+				final FooByCallStatic fooByCallStatic = new FooByCallStatic();
+			}
 		}
 
-		final long end1 = System.currentTimeMillis();
+		// TEST2 - Foo By Call Static
+		System.out.println("Starting test FooByCallStatic " + numberFormat.format(ITERATIONS) + " iterations");
+		final long start2 = System.currentTimeMillis();
+		for (long j = 0; j < ITERATIONS; j++) {
+			final FooByCallStatic fooByCallStatic = new FooByCallStatic();
+		}
 
-		if (doPrint)
-			System.out.println("FooByCall out of main " + (warmup ? "warmup " : "no warmup ")
-					+ numberFormat.format(end1 - start1) + "ms\n\n");
-
+		final long end2 = System.currentTimeMillis();
+		System.out.println("FooByCallStatic in main " + (warmup ? "warmup " : "no warmup ")
+				+ numberFormat.format(end2 - start2) + "ms\n\n");
 	}
-
 }

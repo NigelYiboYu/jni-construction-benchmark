@@ -24,25 +24,58 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include <jni.h>
-#include "com_jni_consbench_FooByCall.h"
-#include "Foo.h"
+/**
+ * */
+package com.jni.consbench.nativebacked.bench;
 
-/*
- * Class:     Java_com_jni_consbench_FooByCall_newFoo
- * Method:    newFoo
- * Signature: ()J
- */
-jlong Java_com_jni_consbench_FooByCall_newFoo(JNIEnv* env, jobject jobj) {
-  consbench::Foo* foo = new consbench::Foo();
-  return reinterpret_cast<jlong>(foo);
-}
+import java.text.NumberFormat;
+import java.util.Locale;
 
-/*
- * Class:     Java_com_jni_consbench_FooByCall_disposeInternal
- * Method:    disposeInternal
- * Signature: (J)V
+import com.jni.consbench.nativebacked.FooByCallInvoke;
+
+/**
+ *
+ * A small JNI Benchmark to show the difference in cost between various models
+ * of Object Construction for a Java API that wraps a C++ API using JNI
+ *
+ * @author Adam Retter <adam.retter@googlemail.com>
  */
-void Java_com_jni_consbench_FooByCall_disposeInternal(JNIEnv* env, jobject jobj, jlong handle) {
-    delete reinterpret_cast<consbench::Foo*>(handle);
+public class BenchmarkInMainFooByCallInvoke {
+
+	// default to 1 million
+	private static long ITERATIONS = 1000000;
+	private static boolean warmup = true;
+
+	public final static void main(final String args[]) {
+		System.loadLibrary("jnibench");
+
+		if (args.length >= 1)
+			ITERATIONS = Long.parseLong(args[0]);
+
+		if (args.length >= 2)
+			warmup = Integer.parseInt(args[1]) != 0;
+
+		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
+		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
+
+		if (warmup) {
+			// TEST3 - Foo By Call Invoke
+			for (long j = 0; j < ITERATIONS; j++) {
+				final FooByCallInvoke fooByCallInvoke = new FooByCallInvoke();
+			}
+		}
+
+		// TEST3 - Foo By Call Invoke
+		System.out.println("Starting test FooByCallInvoke " + numberFormat.format(ITERATIONS) + " iterations");
+		final long start3 = System.currentTimeMillis();
+		for (long j = 0; j < ITERATIONS; j++) {
+			final FooByCallInvoke fooByCallInvoke = new FooByCallInvoke();
+		}
+
+		final long end3 = System.currentTimeMillis();
+		System.out.println("FooByCallInvoke in main " + (warmup ? "warmup " : "no warmup ")
+				+ numberFormat.format(end3 - start3) + "ms");
+
+	}
 }

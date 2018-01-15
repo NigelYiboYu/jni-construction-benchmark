@@ -1,3 +1,4 @@
+package com.jni.consbench.nativebacked;
 /**
  * Copyright © 2016, Evolved Binary Ltd
  * All rights reserved.
@@ -24,12 +25,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include "Foo.h"
 
-namespace consbench {
-Foo::Foo() {
-}
+/**
+ * Follows <i>9.2.7 Pattern 4: Call-Invoke</i> from Java Platform Performance by Steve Wilson
+ * for setting up the handle to the native object
+ */
+public class FooByCallInvoke extends NativeBackedObject {
+    public FooByCallInvoke() {
+        super();
+        newFoo();   //the native method, will find _nativeHandle from the class and set it directly
+    }
 
-Foo::~Foo() {
-}
+    @Override
+    protected void disposeInternal() {
+        disposeInternal(_nativeHandle);
+    }
+
+    private native void newFoo();
+    private native void disposeInternal(final long handle);
 }

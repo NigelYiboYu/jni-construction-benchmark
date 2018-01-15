@@ -1,4 +1,4 @@
-package com.jni.consbench;
+package com.jni.consbench.nativebacked;
 /**
  * Copyright © 2016, Evolved Binary Ltd
  * All rights reserved.

@@ -24,23 +24,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jni.consbench;
+#include <jni.h>
+#include "com_jni_consbench_nativebacked_FooByCallInvoke.h"
+#include "Foo.h"
+#include "../Portal.h"
 
-/**
- * Follows <i>9.2.3 Pattern 1: Call</i> from Java Platform Performance by Steve Wilson
- * for setting up the handle to the native object
+/*
+ * Class:     Java_com_jni_consbench_nativebacked_FooByCallInvoke_newFoo
+ * Method:    newFoo
+ * Signature: ()J
  */
-public class FooByCall extends NativeBackedObject {
-    public FooByCall() {
-        super();
-        this._nativeHandle = newFoo();
-    }
+void Java_com_jni_consbench_nativebacked_FooByCallInvoke_newFoo(JNIEnv* env, jobject jobj) {
+  consbench::Foo* foo = new consbench::Foo();
 
-    @Override
-    protected void disposeInternal() {
-        disposeInternal(_nativeHandle);
-    }
+  //set the _nativeHandle in Java
+  consbench::FooByCallInvokeJni::setHandle(env, jobj, foo);
+}
 
-    private native long newFoo();
-    private native void disposeInternal(final long handle);
+/*
+ * Class:     Java_com_jni_consbench_nativebacked_FooByCallInvoke_disposeInternal
+ * Method:    disposeInternal
+ * Signature: (J)V
+ */
+void Java_com_jni_consbench_nativebacked_FooByCallInvoke_disposeInternal(JNIEnv* env, jobject jobj, jlong handle) {
+    delete reinterpret_cast<consbench::Foo*>(handle);
 }

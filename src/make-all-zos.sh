@@ -9,17 +9,32 @@ export JAVAH="$IBM_JAVA_HOME/bin/javah"
 pwd=`pwd`
 
 echo "javac all java files"
-rm -f com/jni/consbench/*.class
-$JAVAC com/jni/consbench/*.java
+rm -f com/jni/consbench/javabacked/*.class
+rm -f com/jni/consbench/nativebacked/*.class
+rm -f com/jni/consbench/nativebacked/bench/*.class
+rm -f com/jni/consbench/nativebacked/bench/*.class
+
+
+
+$JAVAC com/jni/consbench/javabacked/*.java
+$JAVAC com/jni/consbench/nativebacked/*.java
+$JAVAC com/jni/consbench/nativebacked/bench/*.java
+$JAVAC com/jni/consbench/nativebacked/bench/*.java
+
+
 rm -f ./*.so
 
 
 echo "Creating JNI header files with javah"
 rm -f ./*.h
 
-$JAVAH com.jni.consbench.FooByCall
-$JAVAH com.jni.consbench.FooByCallStatic
-$JAVAH com.jni.consbench.FooByCallInvoke
+$JAVAH com.jni.consbench.javabacked.FooByCall
+$JAVAH com.jni.consbench.javabacked.FooByCallStatic
+$JAVAH com.jni.consbench.javabacked.FooByCallInvoke
+
+$JAVAH com.jni.consbench.nativebacked.FooByCall
+$JAVAH com.jni.consbench.nativebacked.FooByCallStatic
+$JAVAH com.jni.consbench.nativebacked.FooByCallInvoke
 
 
 
