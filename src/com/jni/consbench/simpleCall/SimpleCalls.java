@@ -41,7 +41,50 @@ public class SimpleCalls {
 	// test 7
 	// Java passes an array of const length (e.g. long[] of lenth 1000) to C++,
 	// which increments each element
-	// by j and writes results back to Java array via JNI. 
+	// by j and writes results back to Java array via JNI.
 	// i.e this is performing an element-wise operation: result = array + j.
 	public native void testArrayWriting(long[] array, long j, long[] result);
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	//
+	//
+	//
+	// non-xplink natives
+	//
+	//
+	//
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	// test 1-1
+	// call with no parameters and returns nothing
+	public native void testStdLinkNoParamNoRet();
+
+	// test 2-1
+	// call that takes an long as parameter, increment the long in native code but
+	// returns nothing.
+	public native void testStdLinkNoRet(long i);
+
+	// test 3-1
+	// takes input long i, increment by a constant amount, and return the result
+	public native long testStdLinkRet(long i);
+
+	// test 4-1
+	// just get the field ID of a non-static long field. Do nothing on this field
+	public native void testStdLinkGetFieldID();
+
+	// test 5-1
+	// get the field ID of a non-static long field, and assign input long value to
+	// it
+	public native void testStdLinkSetLongField(long j);
+
+	// test 6-1
+	// static version of the one above. uses a static long field.
+	public static native void testStdLinkSetLongFieldStatic(long j);
+
+	// test 7-1
+	// Java passes an array of const length (e.g. long[] of lenth 1000) to C++,
+	// which increments each element
+	// by j and writes results back to Java array via JNI.
+	// i.e this is performing an element-wise operation: result = array + j.
+	public native void tesStdLinktArrayWriting(long[] array, long j, long[] result);
 }

@@ -8,6 +8,7 @@ public class BenchmarkSetLongField {
 	// default to 1 million
 	private static long ITERATIONS = 1000000;
 	private static boolean warmup = true;
+	private static boolean isXPLink = true;
 
 	private static String testName = "testSetLongField";
 
@@ -18,7 +19,15 @@ public class BenchmarkSetLongField {
 			ITERATIONS = Long.parseLong(args[0]);
 
 		if (args.length >= 2)
-			warmup = Integer.parseInt(args[1]) != 0;
+			warmup = (Integer.parseInt(args[1]) != 0);
+
+		if (args.length >= 3)
+			isXPLink = (Integer.parseInt(args[2]) != 0);
+
+		if (isXPLink)
+			System.loadLibrary("xplinkjnibench");
+		else
+			System.loadLibrary("stdlinkjnibench");
 
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
 		System.out.println(testName + " out of main " + (warmup ? "with warmup" : "no warmup"));
@@ -46,9 +55,8 @@ public class BenchmarkSetLongField {
 		final long end1 = System.currentTimeMillis();
 
 		if (doPrint)
-			System.out.println(testName + " out of main " + (warmup ? "warmup " : "no warmup ")
+			System.out.println(testName + " out of main xplink " + (warmup ? "warmup " : "no warmup ")
 					+ numberFormat.format(end1 - start1) + "ms\n\n");
 
 	}
-
 }
