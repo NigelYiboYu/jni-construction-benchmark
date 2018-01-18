@@ -6,9 +6,24 @@ export LD_LIBRARY_PATH=`pwd`
 
 testIter=300000000
 doWarmup=0
+XPLINK=0
 
 if [[ $1 -ne 0 ]]; then
 	doWarmup=1
+fi
+
+
+uname -a | grep x86
+isX86=$?
+if [ "$isX86" -eq "0" ];
+then
+	echo "Using paths for x86"
+	IBM_JAVA="/home/yunigel/sdk/bin/java"
+	OPENJDK_JAVA="/home/yunigel/openJDK9/jdk-9+181/bin/java"
+else
+	echo "Using paths for zLinux"
+	IBM_JAVA="/jit/team/yunigel/sdk/bin/java"
+	OPENJDK_JAVA="/jit/team/yunigel/openJDK9/jdk-9+181/bin/java"
 fi
 
 JIT_OPT=' -Xjit:verbose,vlog=vlog'
@@ -17,8 +32,7 @@ JVM_OPT=" -cp ../../src"
 
 rm -f vlog*
 
-IBM_JAVA="/jit/team/yunigel/sdk/bin/java"
-OPENJDK_JAVA="/jit/team/yunigel/openJDK9/jdk-9+181/bin/java"
+
 
 echo "***********************************************************"
 echo "*		Testing this java"
@@ -46,11 +60,11 @@ while [ $counter -lt $maxIter ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter $doWarmup $XPLINK
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter $doWarmup $XPLINK
 	
 	#
 	# test 2
@@ -58,11 +72,11 @@ while [ $counter -lt $maxIter ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallStatic $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallStatic $testIter $doWarmup $XPLINK
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallStatic $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallStatic $testIter $doWarmup $XPLINK
 	
 	
 	#
@@ -71,11 +85,11 @@ while [ $counter -lt $maxIter ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallInvoke $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallInvoke $testIter $doWarmup $XPLINK
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallInvoke $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallInvoke $testIter $doWarmup $XPLINK
 
 done
 
@@ -93,11 +107,11 @@ while [ $counter -lt $maxIter ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter $doWarmup $XPLINK
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCall $testIter $doWarmup $XPLINK
 	
 	#
 	# test 2
@@ -105,11 +119,11 @@ while [ $counter -lt $maxIter ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallStatic $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallStatic $testIter $doWarmup $XPLINK
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallStatic $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallStatic $testIter $doWarmup $XPLINK
 	
 	
 	#
@@ -118,11 +132,11 @@ while [ $counter -lt $maxIter ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallInvoke $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallInvoke $testIter $doWarmup $XPLINK
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallInvoke $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.javabacked.bench.BenchmarkFooByCallInvoke $testIter $doWarmup $XPLINK
 	
 
 done

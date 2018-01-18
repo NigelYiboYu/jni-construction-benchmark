@@ -1,39 +1,46 @@
 export LD_LIBRARY_PATH=`pwd`
 
+echo "***********************************************************"
+echo "*							  clean up						 "
+echo "***********************************************************"
+rm -f vlog*
 
+
+echo "***********************************************************"
+echo "*							  setup						     "
+echo "***********************************************************"
 
 turnOnCPs.sh 4
 
 sleep 10
 
-
 # 3 billion for simple calls
 testIter=3000000000
 doWarmup=0
+counter=0
+maxIter=5
 
 if [[ $1 -ne 0 ]]; then
 	doWarmup=1
 fi
 
-rm -f vlog*
 
 IBM_JAVA="/jit/team/yunigel/sdk/bin/java"
+BENCH_PATH="/jit/team/yunigel/jni-bench"
+JAVA=$IBM_JAVA
+
 JIT_OPT=' -Xjit:verbose,vlog=vlog'
 JIT_OPT=''
-JVM_OPT=" -cp ../../src"
-
+JVM_OPT=" -cp $BENCH_PATH/src"
 
 echo "***********************************************************"
 echo "*		Testing this java"
 echo "***********************************************************"
 
+echo "test date " date
 $IBM_JAVA -version
 
 echo "***********************************************************"
-
-counter=0
-maxIter=5
-JAVA=$IBM_JAVA
 
 
 while [ $counter -lt $maxIter ]; do

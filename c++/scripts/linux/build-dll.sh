@@ -3,9 +3,7 @@ rm -f ./*.so
 
 
 uname -a | grep x86
-
 isX86=$?
-
 if [ "$isX86" -eq "0" ];
 then
 	echo "Using paths for x86"

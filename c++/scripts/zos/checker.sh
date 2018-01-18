@@ -1,17 +1,12 @@
-#TOOLS_DIR=/jit/instrumentation/jprof64
-#export PATH=$TOOLS_DIR:$PATH
-#export LIBPATH=$TOOLS_DIR:$LIBPATH
-#export STEPLIB=$TOOLS_DIR:$STEPLIB
 
 
-
-PROF_DURATION=15
-DELAY=2
+PROF_DURATION=60
+DELAY=60
 PROF_LOG_NAME=profile-run.log
 
 while true; do
 
-	grep -iq 'Starting test FooByCall 3' $PROF_LOG_NAME
+	grep -iq 'Starting test' $PROF_LOG_NAME
 
    	if [ $? -eq 0 ]; then
       	break
@@ -22,8 +17,10 @@ while true; do
 done
 
 
+echo "Delaying $DELAY sec before start_sampler"
 sleep $DELAY
 
+echo "Starting sampler"
 starti
 
 sleep $PROF_DURATION
