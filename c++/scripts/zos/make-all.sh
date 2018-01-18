@@ -1,4 +1,4 @@
-export IBM_JAVA_HOME="/home/yunigel/sdk"
+export IBM_JAVA_HOME="/jit/team/yunigel/sdk"
 
 # use lower version of java to compile
 export JAVA="$IBM_JAVA_HOME/bin/java"
@@ -8,24 +8,24 @@ export JAVAH="$IBM_JAVA_HOME/bin/javah"
 
 # scriptDir is ./c++/scripts
 scriptDir=`pwd`
-rootDir="$scriptDir/../.."
-jniIncludeDir="$rootDir/c++/jniInclude"
+rootDir="$scriptDir/../../.."
+CPP_DIR="$rootDir/c++"
+jniIncludeDir="$CPP_DIR/jniInclude"
 
+JVM_OPTS="-J-Xifa:off"
 #############################################################
 #
 #			JAVAC all Java files
 #############################################################
-echo "javac all java files"
+echo "JAVAC all Java files"
 
-cd ../../src
-
-
+cd "$rootDir/src"
 JAVA_FILES=`find . | grep '\.java' | tr '\n' ' '`
 CLASS_FILES=`find . | grep '\.class' | tr '\n' ' '`
 
 rm -f $CLASS_FILES
 
-$JAVAC $JAVA_FILES
+$JAVAC $JVM_OPTS $JAVA_FILES
 
 
 #############################################################
@@ -37,15 +37,15 @@ rm -f ./*.h
 mkdir -p $jniIncludeDir
 rm -f "$jniIncludeDir/*.h"
 
-$JAVAH com.jni.consbench.javaobj.FooByCall
-$JAVAH com.jni.consbench.javaobj.FooByCallStatic
-$JAVAH com.jni.consbench.javaobj.FooByCallInvoke
+$JAVAH  $JVM_OPTS com.jni.consbench.javaobj.FooByCall
+$JAVAH  $JVM_OPTS com.jni.consbench.javaobj.FooByCallStatic
+$JAVAH  $JVM_OPTS com.jni.consbench.javaobj.FooByCallInvoke
 
-$JAVAH com.jni.consbench.nativeobj.FooByCall
-$JAVAH com.jni.consbench.nativeobj.FooByCallStatic
-$JAVAH com.jni.consbench.nativeobj.FooByCallInvoke
+$JAVAH  $JVM_OPTS com.jni.consbench.nativeobj.FooByCall
+$JAVAH  $JVM_OPTS com.jni.consbench.nativeobj.FooByCallStatic
+$JAVAH  $JVM_OPTS com.jni.consbench.nativeobj.FooByCallInvoke
 
-$JAVAH com.jni.consbench.simpleCall.SimpleCalls
+$JAVAH  $JVM_OPTS com.jni.consbench.simpleCall.SimpleCalls
 
 mv ./*.h $jniIncludeDir
 
@@ -57,8 +57,7 @@ mv ./*.h $jniIncludeDir
 echo "Compiling C++ code into shared lib"
 cd $scriptDir
 ./build-dll.sh
-
-
+cp $CPP_DIR/*.so ./
 #############################################################
 #					Patch the SDK
 #

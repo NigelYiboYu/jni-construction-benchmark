@@ -1,4 +1,4 @@
-export IBM_JAVA_HOME="/jit/team/yunigel/sdk"
+export IBM_JAVA_HOME="/home/yunigel/sdk"
 
 # use lower version of java to compile
 export JAVA="$IBM_JAVA_HOME/bin/java"
@@ -8,10 +8,11 @@ export JAVAH="$IBM_JAVA_HOME/bin/javah"
 
 # scriptDir is ./c++/scripts
 scriptDir=`pwd`
-rootDir="$scriptDir/../.."
-jniIncludeDir="$rootDir/c++/jniInclude"
+rootDir="$scriptDir/../../.."
+CPP_DIR="$rootDir/c++"
+jniIncludeDir="$CPP_DIR/jniInclude"
 
-JVM_OPTS="-J-Xifa:off"
+JVM_OPTS=" "
 #############################################################
 #
 #			JAVAC all Java files
@@ -52,23 +53,23 @@ mv ./*.h $jniIncludeDir
 #
 #			Compiling C++ code into shared lib
 #############################################################
-
-echo "Compiling C++ code into shared lib"
 cd $scriptDir
-./build-dll-zos.sh
-
+echo "Compiling C++ code into shared lib"
+./build-dll.sh
+cp $CPP_DIR/*.so $scriptDir/
 #############################################################
 #					Patch the SDK
 #
 #############################################################
 
-if [ -d "$IBM_JAVA_HOME/jre/lib/s390x/compressedrefs" ]; then
-	echo "Patching $IBM_JAVA_HOME/jre/lib/s390x/compressedrefs"
-	cp -v ./*.so $IBM_JAVA_HOME/jre/lib/s390x/compressedrefs/
+cd $scriptDir
+if [ -d "$IBM_JAVA_HOME/jre/lib/amd64/compressedrefs" ]; then
+	echo "Patching $IBM_JAVA_HOME/jre/lib/amd64/compressedrefs"
+	cp -v ./*.so $IBM_JAVA_HOME/jre/lib/amd64/compressedrefs/
 fi
 
 
-if [ -d "$IBM_JAVA_HOME/lib/s390x/compressedrefs" ]; then
-	echo "Patching $IBM_JAVA_HOME/lib/s390x/compressedrefs"
-	cp -v ./*.so $IBM_JAVA_HOME/lib/s390x/compressedrefs/
+if [ -d "$IBM_JAVA_HOME/lib/amd64/compressedrefs" ]; then
+	echo "Patching $IBM_JAVA_HOME/lib/amd64/compressedrefs"
+	cp -v ./*.so $IBM_JAVA_HOME/lib/amd64/compressedrefs/
 fi

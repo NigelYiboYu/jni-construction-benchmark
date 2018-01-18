@@ -20,7 +20,7 @@ rm -f vlog*
 IBM_JAVA="/jit/team/yunigel/sdk/bin/java"
 JIT_OPT=' -Xjit:verbose,vlog=vlog'
 JIT_OPT=''
-JVM_OPT=" $JVM_OPT./../src"
+JVM_OPT=" -cp ../../src"
 
 
 echo "***********************************************************"

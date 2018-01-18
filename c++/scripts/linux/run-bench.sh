@@ -1,6 +1,9 @@
 export LD_LIBRARY_PATH=`pwd`
 
 
+./turnOnCPs.sh 4
+
+
 testIter=300000000
 doWarmup=0
 
@@ -10,7 +13,7 @@ fi
 
 JIT_OPT=' -Xjit:verbose,vlog=vlog'
 JIT_OPT=''
-JVM_OPT=" -cp ../../"
+JVM_OPT=" -cp ../../src"
 
 rm -f vlog*
 
