@@ -6,32 +6,26 @@ export JAVAC="$IBM_JAVA_HOME/bin/javac"
 export JAVAH="$IBM_JAVA_HOME/bin/javah"
 
 
-pwd=`pwd`
+# scriptDir is ./c++/scripts
+scriptDir=`pwd`
+rootDir="$scriptDir/../.."
+jniIncludeDir="$rootDir/c++/jniInclude"
 
+JVM_OPTS="-J-Xifa:off"
 #############################################################
 #
-#			Creating JNI header files with javah
+#			JAVAC all Java files
 #############################################################
-echo "javac all java files"
-rm -f com/jni/consbench/javaobj/*.class
-rm -f com/jni/consbench/javaobj/bench/*.class
+echo "JAVAC all Java files"
 
-rm -f com/jni/consbench/nativeobj/*.class
-rm -f com/jni/consbench/nativeobj/bench/*.class
+cd "$rootDir/src"
+JAVA_FILES=`find . | grep '\.java' | tr '\n' ' '`
+CLASS_FILES=`find . | grep '\.class' | tr '\n' ' '`
 
-rm -f com/jni/consbench/simpleCall/*.class
+rm -f $CLASS_FILES
 
+$JAVAC $JVM_OPTS $JAVA_FILES
 
-$JAVAC com/jni/consbench/javaobj/*.java
-$JAVAC com/jni/consbench/javaobj/bench/*.java
-
-$JAVAC com/jni/consbench/nativeobj/*.java
-$JAVAC com/jni/consbench/nativeobj/bench/*.java
-
-$JAVAC com/jni/consbench/simpleCall/*.java
-
-
-rm -f ./*.so
 
 #############################################################
 #
@@ -39,16 +33,20 @@ rm -f ./*.so
 #############################################################
 echo "Creating JNI header files with javah"
 rm -f ./*.h
+mkdir -p $jniIncludeDir
+rm -f "$jniIncludeDir/*.h"
 
-$JAVAH com.jni.consbench.javaobj.FooByCall
-$JAVAH com.jni.consbench.javaobj.FooByCallStatic
-$JAVAH com.jni.consbench.javaobj.FooByCallInvoke
+$JAVAH  $JVM_OPTS com.jni.consbench.javaobj.FooByCall
+$JAVAH  $JVM_OPTS com.jni.consbench.javaobj.FooByCallStatic
+$JAVAH  $JVM_OPTS com.jni.consbench.javaobj.FooByCallInvoke
 
-$JAVAH com.jni.consbench.nativeobj.FooByCall
-$JAVAH com.jni.consbench.nativeobj.FooByCallStatic
-$JAVAH com.jni.consbench.nativeobj.FooByCallInvoke
+$JAVAH  $JVM_OPTS com.jni.consbench.nativeobj.FooByCall
+$JAVAH  $JVM_OPTS com.jni.consbench.nativeobj.FooByCallStatic
+$JAVAH  $JVM_OPTS com.jni.consbench.nativeobj.FooByCallInvoke
 
-$JAVAH com.jni.consbench.simpleCall.SimpleCalls
+$JAVAH  $JVM_OPTS com.jni.consbench.simpleCall.SimpleCalls
+
+mv ./*.h $jniIncludeDir
 
 #############################################################
 #
@@ -56,12 +54,8 @@ $JAVAH com.jni.consbench.simpleCall.SimpleCalls
 #############################################################
 
 echo "Compiling C++ code into shared lib"
-cd ../c++
-./make-all-cpp-zos.sh
-
-cd $pwd
-cp ../c++/*.so .
-
+cd $scriptDir
+./build-dll-zos.sh
 
 #############################################################
 #					Patch the SDK
@@ -69,10 +63,12 @@ cp ../c++/*.so .
 #############################################################
 
 if [ -d "$IBM_JAVA_HOME/jre/lib/s390x/compressedrefs" ]; then
+	echo "Patching $IBM_JAVA_HOME/jre/lib/s390x/compressedrefs"
 	cp -v ./*.so $IBM_JAVA_HOME/jre/lib/s390x/compressedrefs/
 fi
 
 
 if [ -d "$IBM_JAVA_HOME/lib/s390x/compressedrefs" ]; then
+	echo "Patching $IBM_JAVA_HOME/lib/s390x/compressedrefs"
 	cp -v ./*.so $IBM_JAVA_HOME/lib/s390x/compressedrefs/
 fi

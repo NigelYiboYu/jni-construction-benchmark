@@ -1,6 +1,4 @@
-
-export IBM_JAVA_HOME="/jit/team/yunigel/sdk"
-export OPENJDK_JAVA_HOME="/jit/team/yunigel/openJDK9/jdk-9+181"
+export IBM_JAVA_HOME="/home/yunigel/sdk"
 
 # use lower version of java to compile
 export JAVA="$IBM_JAVA_HOME/bin/java"
@@ -8,41 +6,27 @@ export JAVAC="$IBM_JAVA_HOME/bin/javac"
 export JAVAH="$IBM_JAVA_HOME/bin/javah"
 
 
-
-
-
-# use lower version of java to compile
-export JAVA="$IBM_JAVA_HOME/bin/java"
-export JAVAC="$IBM_JAVA_HOME/bin/javac"
-export JAVAH="$IBM_JAVA_HOME/bin/javah"
-
-
-pwd=`pwd`
+# scriptDir is ./c++/scripts
+scriptDir=`pwd`
+rootDir="$scriptDir/../.."
+jniIncludeDir="$rootDir/c++/jniInclude"
 
 #############################################################
 #
-#			Creating JNI header files with javah
+#			JAVAC all Java files
 #############################################################
 echo "javac all java files"
-rm -f com/jni/consbench/javaobj/*.class
-rm -f com/jni/consbench/javaobj/bench/*.class
 
-rm -f com/jni/consbench/nativeobj/*.class
-rm -f com/jni/consbench/nativeobj/bench/*.class
-
-rm -f com/jni/consbench/simpleCall/*.class
+cd ../../src
 
 
-$JAVAC com/jni/consbench/javaobj/*.java
-$JAVAC com/jni/consbench/javaobj/bench/*.java
+JAVA_FILES=`find . | grep '\.java' | tr '\n' ' '`
+CLASS_FILES=`find . | grep '\.class' | tr '\n' ' '`
 
-$JAVAC com/jni/consbench/nativeobj/*.java
-$JAVAC com/jni/consbench/nativeobj/bench/*.java
+rm -f $CLASS_FILES
 
-$JAVAC com/jni/consbench/simpleCall/*.java
+$JAVAC $JAVA_FILES
 
-
-rm -f ./*.so
 
 #############################################################
 #
@@ -50,6 +34,8 @@ rm -f ./*.so
 #############################################################
 echo "Creating JNI header files with javah"
 rm -f ./*.h
+mkdir -p $jniIncludeDir
+rm -f "$jniIncludeDir/*.h"
 
 $JAVAH com.jni.consbench.javaobj.FooByCall
 $JAVAH com.jni.consbench.javaobj.FooByCallStatic
@@ -61,17 +47,16 @@ $JAVAH com.jni.consbench.nativeobj.FooByCallInvoke
 
 $JAVAH com.jni.consbench.simpleCall.SimpleCalls
 
+mv ./*.h $jniIncludeDir
+
 #############################################################
 #
 #			Compiling C++ code into shared lib
 #############################################################
 
 echo "Compiling C++ code into shared lib"
-cd ../c++
-./make-all-cpp.sh
-
-cd $pwd
-cp ../c++/*.so .
+cd $scriptDir
+./build-dll.sh
 
 
 #############################################################
@@ -80,10 +65,12 @@ cp ../c++/*.so .
 #############################################################
 
 if [ -d "$IBM_JAVA_HOME/jre/lib/s390x/compressedrefs" ]; then
+	echo "Patching $IBM_JAVA_HOME/jre/lib/s390x/compressedrefs"
 	cp -v ./*.so $IBM_JAVA_HOME/jre/lib/s390x/compressedrefs/
 fi
 
 
 if [ -d "$IBM_JAVA_HOME/lib/s390x/compressedrefs" ]; then
+	echo "Patching $IBM_JAVA_HOME/lib/s390x/compressedrefs"
 	cp -v ./*.so $IBM_JAVA_HOME/lib/s390x/compressedrefs/
 fi
