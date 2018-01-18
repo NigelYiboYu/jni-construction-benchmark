@@ -12,6 +12,8 @@ fi
 
 JIT_OPT=' -Xjit:verbose,vlog=vlog'
 JIT_OPT=''
+JVM_OPT=" -cp ../../"
+
 rm -f vlog*
 
 IBM_JAVA="/jit/team/yunigel/sdk/bin/java"
@@ -44,11 +46,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	echo "test 1"
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkNoParamNoRet $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkNoParamNoRet $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkNoParamNoRet $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkNoParamNoRet $testIter $doWarmup
 	
 	#
 	# test 2
@@ -56,11 +58,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	echo "test 2"
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkNoRet $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkNoRet $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkNoRet $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkNoRet $testIter $doWarmup
 	
 	
 	#
@@ -69,11 +71,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	echo "test 3"
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkRet $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkRet $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkRet $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkRet $testIter $doWarmup
 
 	
 	#
@@ -82,11 +84,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	echo "test 4"
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkGetFieldID $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkGetFieldID $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkGetFieldID $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkGetFieldID $testIter $doWarmup
 	
 	#
 	# test 5
@@ -94,11 +96,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	echo "test 5"
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkSetLongField $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkSetLongField $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkSetLongField $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkSetLongField $testIter $doWarmup
 	
 	#
 	# test 6
@@ -106,11 +108,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	echo "test 6"
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkSetLongFieldStatic $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkSetLongFieldStatic $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkSetLongFieldStatic $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkSetLongFieldStatic $testIter $doWarmup
 	
 	#
 	# test 7
@@ -122,11 +124,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup
 	
 	testIter=$oldIter
 done
@@ -146,11 +148,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	echo "test 1"
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkNoParamNoRet $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkNoParamNoRet $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkNoParamNoRet $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkNoParamNoRet $testIter $doWarmup
 	
 	#
 	# test 2
@@ -158,11 +160,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	echo "test 2"
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkNoRet $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkNoRet $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkNoRet $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkNoRet $testIter $doWarmup
 	
 	
 	#
@@ -171,11 +173,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	echo "test 3"
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkRet $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkRet $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkRet $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkRet $testIter $doWarmup
 
 	
 	#
@@ -184,11 +186,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	echo "test 4"
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkGetFieldID $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkGetFieldID $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkGetFieldID $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkGetFieldID $testIter $doWarmup
 	
 	#
 	# test 5
@@ -196,11 +198,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	echo "test 5"
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkSetLongField $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkSetLongField $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkSetLongField $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkSetLongField $testIter $doWarmup
 	
 	#
 	# test 6
@@ -208,11 +210,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	echo "test 6"
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkSetLongFieldStatic $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkSetLongFieldStatic $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkSetLongFieldStatic $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkSetLongFieldStatic $testIter $doWarmup
 	
 	#
 	# test 7
@@ -224,11 +226,11 @@ while [ $counter -lt $MAX_ITER ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup
 	
 	testIter=$oldIter
 done

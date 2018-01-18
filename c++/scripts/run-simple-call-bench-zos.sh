@@ -20,6 +20,7 @@ rm -f vlog*
 IBM_JAVA="/jit/team/yunigel/sdk/bin/java"
 JIT_OPT=' -Xjit:verbose,vlog=vlog'
 JIT_OPT=''
+JVM_OPT=" -cp ../../src"
 
 
 echo "***********************************************************"
@@ -34,6 +35,7 @@ counter=0
 maxIter=5
 JAVA=$IBM_JAVA
 
+
 while [ $counter -lt $maxIter ]; do
 	echo iteration $counter in $maxIter
 	counter=$[$counter+1]
@@ -43,41 +45,41 @@ while [ $counter -lt $maxIter ]; do
 	#
 	
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkNoParamNoRet $testIter 0
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkNoParamNoRet $testIter 0
 	
 	
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkNoParamNoRet $testIter 1
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkNoParamNoRet $testIter 1
 	
 	#
 	# test 2
 	#
 	
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkNoRet $testIter 0
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkNoRet $testIter 0
 	
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkNoRet $testIter 1
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkNoRet $testIter 1
 	
 	#
 	# test 3
 	#
 
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkRet $testIter 0
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkRet $testIter 0
 
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkRet $testIter 1
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkRet $testIter 1
 		
 	#
 	# test 4
 	#
 
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkGetFieldID $testIter 0
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkGetFieldID $testIter 0
 
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkGetFieldID $testIter 1
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkGetFieldID $testIter 1
 	
 	
 	#
@@ -85,10 +87,10 @@ while [ $counter -lt $maxIter ]; do
 	#
 
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkSetLongField $testIter 0
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkSetLongField $testIter 0
 
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkSetLongField $testIter 1
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkSetLongField $testIter 1
 
 
 	#
@@ -96,24 +98,29 @@ while [ $counter -lt $maxIter ]; do
 	#
 
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkSetLongFieldStatic $testIter 0
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkSetLongFieldStatic $testIter 0
 
 	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkSetLongFieldStatic $testIter 1
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkSetLongFieldStatic $testIter 1
 	
 	#
 	# test 7
+	# This takes too much time on zOS. just run it once
 	#
 
-    oldIter=$testIter
-    testIter=5000000
-
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter 0
-
-	sleep 10
-	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter 1
+	if [[ $counter -eq "0" ]]; then
+	    oldIter=$testIter
+	    testIter=5000000
 	
-	testIter=$oldIter
+		sleep 10
+		$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter 0
+	
+		sleep 10
+		$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter 1
+		
+		testIter=$oldIter
+	else
+		echo "Skipping test 7"
+	fi
 done
 
