@@ -59,7 +59,7 @@ public class Benchmark {
 		System.out.println("Calling JNI from main() function.");
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
 
-		System.loadLibrary("jnibench");
+		System.loadLibrary("xplinkjnibench");
 
 		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 

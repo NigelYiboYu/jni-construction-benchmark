@@ -13,5 +13,5 @@ INC_PATH="-I$BENCH_HOME/src -I$OPENJDK_HOME/include/ -I$OPENJDK_HOME/include/lin
 g++ $CXXFLAGS -o libjnibench.so $INC_PATH \
 	./nativeobj/Foo.cpp ./nativeobj/FooByCall.cpp \
 	./nativeobj/FooByCallStatic.cpp ./nativeobj/FooByCallInvoke.cpp \
-	./javaobj/FooByCall.cpp ./javaobj/FooByCallStatic.cpp ./javaobj/FooByCallInvoke.cpp \
+	./javaobj/FooByCallJavaObject.cpp ./javaobj/FooByCallStaticJavaObject.cpp ./javaobj/FooByCallInvokeJavaObject.cpp \
 	./simplecall/SimpleCall.cpp  

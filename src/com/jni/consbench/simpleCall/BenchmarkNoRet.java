@@ -12,7 +12,7 @@ public class BenchmarkNoRet {
 	private static String testName = "testNoRet";
 
 	public final static void main(final String args[]) {
-		System.loadLibrary("jnibench");
+		System.loadLibrary("xplinkjnibench");
 
 		if (args.length >= 1)
 			ITERATIONS = Long.parseLong(args[0]);

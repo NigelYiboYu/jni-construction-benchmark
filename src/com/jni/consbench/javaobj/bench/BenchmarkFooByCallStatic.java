@@ -13,7 +13,7 @@ public class BenchmarkFooByCallStatic {
 	private static boolean warmup = true;
 
 	public final static void main(final String args[]) {
-		System.loadLibrary("jnibench");
+		System.loadLibrary("xplinkjnibench");
 
 		if (args.length >= 1)
 			ITERATIONS = Long.parseLong(args[0]);

@@ -105,10 +105,15 @@ while [ $counter -lt $maxIter ]; do
 	# test 7
 	#
 
+    oldIter=$testIter
+    testIter=5000000
+
 	sleep 10
 	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter 0
 
 	sleep 10
 	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter 1
+	
+	testIter=$oldIter
 done
 

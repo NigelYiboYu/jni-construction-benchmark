@@ -12,7 +12,7 @@ public class BenchmarkGetFieldID {
 	private static String testName = "testGetFieldID";
 
 	public final static void main(final String args[]) {
-		System.loadLibrary("jnibench");
+		System.loadLibrary("xplinkjnibench");
 
 		if (args.length >= 1)
 			ITERATIONS = Long.parseLong(args[0]);

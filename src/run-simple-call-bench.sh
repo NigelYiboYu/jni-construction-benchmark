@@ -114,8 +114,12 @@ while [ $counter -lt $MAX_ITER ]; do
 	
 	#
 	# test 7
-	#
+	# uses 5 million iterations
 	echo "test 7"
+	
+	oldIter=$testIter
+	testIter=5000000
+	
 	JAVA=$IBM_JAVA
 	sleep 10
 	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup
@@ -123,6 +127,8 @@ while [ $counter -lt $MAX_ITER ]; do
 	JAVA=$OPENJDK_JAVA
 	sleep 10
 	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup
+	
+	testIter=$oldIter
 done
 
 
@@ -210,8 +216,12 @@ while [ $counter -lt $MAX_ITER ]; do
 	
 	#
 	# test 7
-	#
+	# uses 5 million iterations
 	echo "test 7"
+	
+	oldIter=$testIter
+	testIter=5000000
+	
 	JAVA=$IBM_JAVA
 	sleep 10
 	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup
@@ -219,6 +229,8 @@ while [ $counter -lt $MAX_ITER ]; do
 	JAVA=$OPENJDK_JAVA
 	sleep 10
 	$JAVA  $JIT_OPT -cp . com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup
+	
+	testIter=$oldIter
 done
 
 
