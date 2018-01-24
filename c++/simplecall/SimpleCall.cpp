@@ -58,8 +58,10 @@ void Java_com_jni_consbench_simpleCall_SimpleCalls_testSetLongFieldStatic(
 // test 7
 //  takes an input array of long, add val to each element and writes the result back to
 // a output long[] via jni
-void Java_com_jni_consbench_simpleCall_SimpleCalls_testArrayWriting(JNIEnv* env,
-		jobject jobj, jlongArray input, jlong val, jlongArray output) {
+// The use of GetLongArrayElements() will cause full array copies.
+void Java_com_jni_consbench_simpleCall_SimpleCalls_testArrayReadWriteElement(
+		JNIEnv* env, jobject jobj, jlongArray input, jlong val,
+		jlongArray output) {
 
 	jsize inputLen = env->GetArrayLength(input);
 	jsize outputLen = env->GetArrayLength(output);
@@ -77,5 +79,25 @@ void Java_com_jni_consbench_simpleCall_SimpleCalls_testArrayWriting(JNIEnv* env,
 	env->ReleaseLongArrayElements(input, inputBody, JNI_COMMIT);
 	env->ReleaseLongArrayElements(output, outputBody, JNI_COMMIT);
 
+	return;
+}
+
+// test 8: avoiding full array copies
+//  takes an input array of long, add val to each element and writes the result back to
+// a output long[] via jni
+void Java_com_jni_consbench_simpleCall_SimpleCalls_testArrayReadWriteRegion(
+		JNIEnv* env, jobject jobj, jlongArray input, jlong val,
+		jlongArray output, jint len) {
+
+	jlong inputRegion[len] ;
+	jlong outputRegion[len];
+
+	env->GetLongArrayRegion(input, 0, len, inputRegion);
+
+	for (jsize i = 0; i < len; ++i) {
+		outputRegion[i] = inputRegion[i] + val;
+	}
+
+	env->SetLongArrayRegion(output, 0, len, outputRegion);
 	return;
 }

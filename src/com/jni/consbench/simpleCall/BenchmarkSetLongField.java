@@ -32,8 +32,10 @@ public class BenchmarkSetLongField {
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
 		System.out.println(testName + " out of main " + (warmup ? "with warmup" : "no warmup"));
 
-		if (warmup)
+		if (warmup) {
+			System.out.println("warming up");
 			doTest(false);
+		}
 
 		doTest(true);
 	}
@@ -55,8 +57,8 @@ public class BenchmarkSetLongField {
 		final long end1 = System.currentTimeMillis();
 
 		if (doPrint)
-			System.out.println(testName + " out of main xplink " + (warmup ? "warmup " : "no warmup ")
-					+ numberFormat.format(end1 - start1) + "ms\n\n");
+			System.out.println(testName + " out of main " + (warmup ? "warmup " : "no warmup ")
+					+ (isXPLink ? "xplink " : "non-xplink ") + numberFormat.format(end1 - start1) + "ms\n\n");
 
 	}
 }

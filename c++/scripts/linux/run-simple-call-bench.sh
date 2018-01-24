@@ -147,6 +147,24 @@ while [ $counter -lt $MAX_ITER ]; do
 	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup $XPLINK
 	
 	testIter=$oldIter
+	
+	
+	#
+	# test 8
+	# uses 200 million iterations
+	echo "test 8"
+	oldIter=$testIter
+	testIter=200000000
+	
+	JAVA=$IBM_JAVA
+	sleep 10
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayReadWriteRegion $testIter $doWarmup $XPLINK
+	
+	JAVA=$OPENJDK_JAVA
+	sleep 10
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayReadWriteRegion $testIter $doWarmup $XPLINK
+
+	testIter=$oldIter
 done
 
 
@@ -242,12 +260,29 @@ while [ $counter -lt $MAX_ITER ]; do
 	
 	JAVA=$IBM_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup $XPLINK
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayReadWriteElement $testIter $doWarmup $XPLINK
 	
 	JAVA=$OPENJDK_JAVA
 	sleep 10
-	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayWriting $testIter $doWarmup $XPLINK
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayReadWriteElement $testIter $doWarmup $XPLINK
 	
+	testIter=$oldIter
+	
+	#
+	# test 8
+	# uses 200 million iterations
+	echo "test 8"
+	oldIter=$testIter
+	testIter=200000000
+	
+	JAVA=$IBM_JAVA
+	sleep 10
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayReadWriteRegion $testIter $doWarmup $XPLINK
+	
+	JAVA=$OPENJDK_JAVA
+	sleep 10
+	$JAVA  $JIT_OPT $JVM_OPT com.jni.consbench.simpleCall.BenchmarkArrayReadWriteRegion $testIter $doWarmup $XPLINK
+
 	testIter=$oldIter
 done
 

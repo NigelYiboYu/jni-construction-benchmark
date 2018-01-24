@@ -3,6 +3,7 @@ package com.jni.consbench.simpleCall;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+@Deprecated
 public class BenchmarkGetFieldID {
 
 	// default to 1 million
@@ -31,8 +32,10 @@ public class BenchmarkGetFieldID {
 		System.out.println("Using iteration count " + ITERATIONS + "\n\n");
 		System.out.println(testName + " out of main " + (warmup ? "with warmup" : "no warmup"));
 
-		if (warmup)
+		if (warmup) {
+			System.out.println("warming up");
 			doTest(false);
+		}
 
 		doTest(true);
 	}
@@ -54,8 +57,8 @@ public class BenchmarkGetFieldID {
 		final long end1 = System.currentTimeMillis();
 
 		if (doPrint)
-			System.out.println(testName + " out of main xp link" + (warmup ? "warmup " : "no warmup ")
-					+ numberFormat.format(end1 - start1) + "ms\n\n");
+			System.out.println(testName + " out of main" + (warmup ? "warmup " : "no warmup ")
+					+ (isXPLink ? "xplink " : "non-xplink ") + numberFormat.format(end1 - start1) + "ms\n\n");
 
 	}
 }

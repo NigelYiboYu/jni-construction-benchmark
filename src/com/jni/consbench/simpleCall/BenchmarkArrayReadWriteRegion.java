@@ -3,17 +3,19 @@ package com.jni.consbench.simpleCall;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class BenchmarkSetLongFieldStatic {
+public class BenchmarkArrayReadWriteRegion {
 
 	// default to 1 million
 	private static long ITERATIONS = 1000000;
 	private static boolean warmup = true;
 	private static boolean isXPLink = true;
 
-	private static String testName = "testSetLongFieldStatic";
+	private static int chunkSize = 10;
+	private static final int arraySize = 1000;
+
+	private static String testName = "testArrayReadWriteRegion";
 
 	public final static void main(final String args[]) {
-		System.loadLibrary("xplinkjnibench");
 
 		if (args.length >= 1)
 			ITERATIONS = Long.parseLong(args[0]);
@@ -23,6 +25,9 @@ public class BenchmarkSetLongFieldStatic {
 
 		if (args.length >= 3)
 			isXPLink = (Integer.parseInt(args[2]) != 0);
+
+		if (args.length >= 4)
+			chunkSize = Integer.parseInt(args[3]);
 
 		if (isXPLink)
 			System.loadLibrary("xplinkjnibench");
@@ -44,20 +49,29 @@ public class BenchmarkSetLongFieldStatic {
 
 		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
+		long[] array = new long[arraySize];
+		long[] result = new long[arraySize];
+
+		for (int i = 0; i < arraySize; ++i) {
+			array[i] = i + 17;
+		}
+
 		if (doPrint)
 			System.out.println("Starting test " + testName + " " + numberFormat.format(ITERATIONS) + " iterations");
 
 		final long start1 = System.currentTimeMillis();
+		final SimpleCalls simpleCalls = new SimpleCalls();
 
 		for (long j = 0; j < ITERATIONS; j++) {
-			SimpleCalls.testSetLongFieldStatic(j);
+			simpleCalls.testArrayReadWriteRegion(array, j, result, chunkSize);
 		}
 
 		final long end1 = System.currentTimeMillis();
 
 		if (doPrint)
 			System.out.println(testName + " out of main " + (warmup ? "warmup " : "no warmup ")
-					+ (isXPLink ? "xplink " : "non-xplink ") + numberFormat.format(end1 - start1) + "ms\n\n");
+					+ (isXPLink ? "xplink" : "non-xplink") + " chunk size " + chunkSize + ": "
+					+ numberFormat.format(end1 - start1) + "ms\n\n");
 
 	}
 }
