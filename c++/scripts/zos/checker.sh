@@ -1,8 +1,16 @@
-
+#######################################################
+#					Config
+#######################################################
+export JVM_TO_MEASURE=/jit/team/yunigel/sdk-31/
 
 PROF_DURATION=60
 DELAY=60
 PROF_LOG_NAME=profile-run.log
+#######################################################
+#					Wait
+#######################################################
+echo "Waiting for test to start"
+
 
 while true; do
 
@@ -16,7 +24,9 @@ while true; do
 
 done
 
-
+#######################################################
+#					Start
+#######################################################
 echo "Delaying $DELAY sec before start_sampler"
 sleep $DELAY
 
