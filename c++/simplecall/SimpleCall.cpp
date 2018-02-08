@@ -1,3 +1,5 @@
+//#define _AE_BIMODAL
+
 #include <jni.h>
 #include <assert.h>
 
@@ -14,6 +16,15 @@ void Java_com_jni_consbench_simpleCall_SimpleCalls_testNoParamNoRet(
 void Java_com_jni_consbench_simpleCall_SimpleCalls_testNoRet(JNIEnv* env,
 		jobject jobj, jlong val) {
 	val += 22;
+
+
+	if ((val % 3000000) == 1)
+	{
+#pragma convert("IBM-1047")
+		printf("hello ");
+#pragma convert(pop)
+	}
+
 	return;
 }
 

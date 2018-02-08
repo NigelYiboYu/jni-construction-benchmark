@@ -1,9 +1,20 @@
-export IBM_JAVA_HOME="/jit/team/yunigel/sdk"
+#############################################################
+#
+#			Configurations
+#############################################################
 
+export HOME_DIR="/home/yunigel"
+
+export IBM_JAVA_HOME="$HOME_DIR/sdk"
+export OPEN_JDK_HOME=""
+
+
+# SDK_DIR used to compile java and generate JNI headers
 # use lower version of java to compile
-export JAVA="$IBM_JAVA_HOME/bin/java"
-export JAVAC="$IBM_JAVA_HOME/bin/javac"
-export JAVAH="$IBM_JAVA_HOME/bin/javah"
+export SDK_DIR=$IBM_JAVA_HOME
+export JAVA="$SDK_DIR/bin/java"
+export JAVAC="$SDK_DIR/bin/javac"
+export JAVAH="$SDK_DIR/bin/javah"
 
 
 # scriptDir is ./c++/scripts
@@ -59,7 +70,7 @@ cd $scriptDir
 ./build-dll.sh
 cp $CPP_DIR/*.so ./
 #############################################################
-#					Patch the SDK
+#					Patch the IBM SDK
 #
 #############################################################
 

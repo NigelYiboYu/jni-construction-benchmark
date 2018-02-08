@@ -1,0 +1,6 @@
+
+identityFile=/cygdrive/c/Users/NIGELYu/Desktop/keys/miley/identity
+
+scp -i $identityFile -r src yunigel@zoscan03:/home/yunigel/jni-bench
+
+scp -i $identityFile -r c++ yunigel@zoscan03:/home/yunigel/jni-bench

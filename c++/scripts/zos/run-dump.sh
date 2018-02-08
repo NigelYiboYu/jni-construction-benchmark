@@ -3,11 +3,12 @@
 #######################################################
 
 HOME_DIR="/trjit/sandbox/yunigel"
-
-
 IBM_SDK="$HOME_DIR/sdk-31"
+
+
 IBM_JAVA="$IBM_SDK/bin/java"
 IBM_SDK_FLAV="s390/default"
+#IBM_SDK_FLAV="s390x/compressedrefs"
 
 BENCH_PATH="$HOME_DIR/jni-bench"
 BENCH_NAME="com.jni.consbench.simpleCall.BenchmarkNoParamNoRet"
@@ -23,6 +24,7 @@ JIT_OPT=' -Xjit:verbose,vlog=vlog,{com/jni/consbench/simpleCall/BenchmarkNoParam
 testIter=3000000000
 doWarmup=0
 useXPLINK=0
+bitness=31
 
 export LD_LIBRARY_PATH=`pwd`
 #######################################################
@@ -31,8 +33,8 @@ export LD_LIBRARY_PATH=`pwd`
 rm -f $PROF_LOG_NAME
 touch $PROF_LOG_NAME
 
-turnOnCPs.sh 4
 
+./cleanup
 
 rm -f vlog*
 rm -f trace*
@@ -48,15 +50,15 @@ echo "Patching SDK with benchmark DLL"
 cp ./libstdlinkjnibench.so $IBM_SDK/jre/lib/$IBM_SDK_FLAV/
 cp ./libstdlinkjnibench.so $IBM_SDK/lib/$IBM_SDK_FLAV/
 
-cp ./libxplinkjnibench.so $IBM_SDK/jre/lib/$IBM_SDK_FLAV/
-cp ./libxplinkjnibench.so $IBM_SDK/lib/$IBM_SDK_FLAV/
+cp ./libxplinkjnibench$bitness.so $IBM_SDK/jre/lib/$IBM_SDK_FLAV/libxplinkjnibench.so
+cp ./libxplinkjnibench$bitness.so $IBM_SDK/lib/$IBM_SDK_FLAV/libxplinkjnibench.so
 
 
 echo "***********************************************************"
 echo "*         Benchmarking this java                           "
 echo "***********************************************************"
 
-$IBM_JAVA -version
+#$IBM_JAVA -version
 
 echo "***********************************************************"
 
@@ -67,7 +69,4 @@ JAVA=$IBM_JAVA
 # use -Xdump:tool:events=vmstop,exec='sleep 10000' to wait
 #######################################################
 sleep 10
-$JAVA $JIT_OPT  \
-	$DUMP_OPT $AGENT_OPT  $JVM_OPT \
-	$BENCH_NAME \
-	$testIter $doWarmup $useXPLINK
+$JAVA $JIT_OPT $DUMP_OPT $AGENT_OPT  $JVM_OPT $BENCH_NAME $testIter $doWarmup $useXPLINK
