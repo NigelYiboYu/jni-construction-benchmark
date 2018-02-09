@@ -11,31 +11,30 @@ IBM_SDK_FLAV="s390/default"
 #IBM_SDK_FLAV="s390x/compressedrefs"
 
 BENCH_PATH="$HOME_DIR/jni-bench"
-BENCH_NAME="com.jni.consbench.simpleCall.BenchmarkNoParamNoRet"
+BENCH_NAME="com.jni.consbench.simpleCall.BenchmarkNoRet"
 
-AGENT_OPT=''
 DUMP_OPT=" -Xdump:system+java:events=vmstop "
 DUMP_OPT=" -Xdump:none"
 
-JVM_OPT=" -cp $BENCH_PATH/src"
-JIT_OPT=' -Xjit:verbose,vlog=vlog,{com/jni/consbench/simpleCall/BenchmarkNoParamNoRet.doTest(Z)V}{hot}(traceFull,traceCG,log=trace-JNI-doTest),{com/jni/consbench/simpleCall/SimpleCalls.testNoParamNoRet()V}(traceFull,traceCG,log=trace-JNI-thunk)'
+JVM_OPT=" -cp $BENCH_PATH/src -Xoptionsfile=$BENCH_PATH/c++/scripts/zos/optfile"
 
 
-testIter=3000000000
+testIter=300000000
 doWarmup=0
 useXPLINK=0
-bitness=31
+BITNESS=31
 
 export LD_LIBRARY_PATH=`pwd`
 #######################################################
-#					Prep
+#					Prep and cleanup
 #######################################################
 rm -f $PROF_LOG_NAME
 touch $PROF_LOG_NAME
 
-
-./cleanup
-
+rm -f javacore*
+rm -f jitdump*
+rm -f core*
+rm -f Snap*
 rm -f vlog*
 rm -f trace*
 
@@ -47,11 +46,32 @@ rm -f trace*
 echo "Patching SDK with benchmark DLL"
 
 
-cp ./libstdlinkjnibench.so $IBM_SDK/jre/lib/$IBM_SDK_FLAV/
-cp ./libstdlinkjnibench.so $IBM_SDK/lib/$IBM_SDK_FLAV/
+if [[ $BITNESS -eq "31" ]];
+then
+	if [[ -z $IBM_SDK/jre/lib/$IBM_SDK_FLAV/ ]];
+	then
+		cp ./libstdlinkjnibench.so $IBM_SDK/jre/lib/$IBM_SDK_FLAV/
+	fi
+	
+	if [[ -z $IBM_SDK/lib/$IBM_SDK_FLAV/ ]];
+	then
+		cp ./libstdlinkjnibench.so $IBM_SDK/lib/$IBM_SDK_FLAV/
+	fi
+	
+fi
 
-cp ./libxplinkjnibench$bitness.so $IBM_SDK/jre/lib/$IBM_SDK_FLAV/libxplinkjnibench.so
-cp ./libxplinkjnibench$bitness.so $IBM_SDK/lib/$IBM_SDK_FLAV/libxplinkjnibench.so
+
+	
+if [[ -z $IBM_SDK/jre/lib/$IBM_SDK_FLAV/ ]];
+then
+	cp ./libxplinkjnibench$BITNESS.so $IBM_SDK/jre/lib/$IBM_SDK_FLAV/libxplinkjnibench.so
+fi
+
+
+if [[ -z $IBM_SDK/lib/$IBM_SDK_FLAV/ ]];
+then
+	cp ./libxplinkjnibench$BITNESS.so $IBM_SDK/lib/$IBM_SDK_FLAV/libxplinkjnibench.so
+fi
 
 
 echo "***********************************************************"
@@ -68,5 +88,4 @@ JAVA=$IBM_JAVA
 #					Start benchmark
 # use -Xdump:tool:events=vmstop,exec='sleep 10000' to wait
 #######################################################
-sleep 10
-$JAVA $JIT_OPT $DUMP_OPT $AGENT_OPT  $JVM_OPT $BENCH_NAME $testIter $doWarmup $useXPLINK
+$JAVA $DUMP_OPT $JVM_OPT $BENCH_NAME $testIter $doWarmup $useXPLINK
