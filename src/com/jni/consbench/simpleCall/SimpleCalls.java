@@ -18,7 +18,7 @@ public class SimpleCalls {
 	 * call with no parameters and returns nothing
 	 * 
 	 */
-	public native void testNoParamNoRet();
+	public final native void testNoParamNoRet();
 
 	/**
 	 * \brief Test 2
@@ -26,7 +26,7 @@ public class SimpleCalls {
 	 * call that takes an long as parameter, increment the long in native code but
 	 * returns nothing.
 	 */
-	public native void testNoRet(long i);
+	public final native void testNoRet(long i);
 
 	/**
 	 * \brief Test 3
@@ -34,7 +34,9 @@ public class SimpleCalls {
 	 * takes input long i, increment by a constant amount, and return the result
 	 * 
 	 */
-	public native long testRet(long i);
+	public final native double testRet(long i, int j, boolean k, byte x, char y, short z, 
+			float f1, float f2, float f3, float f4, float f5, 
+			double d1, double d2);
 
 	/**
 	 * \brief test 4
@@ -43,7 +45,7 @@ public class SimpleCalls {
 	 * non-static long field. Do nothing on this field
 	 */
 	@Deprecated
-	public native void testGetFieldID();
+	public final native void testGetFieldID();
 
 	/**
 	 * \brief Test 5
@@ -51,14 +53,14 @@ public class SimpleCalls {
 	 * get the field ID of a non-static long field, and assign input long value to
 	 * it
 	 */
-	public native void testSetLongField(long j);
+	public final native void testSetLongField(long j);
 
 	/**
 	 * \brief Test 6
 	 * <p>
 	 * static version of the one above. uses a static long field.
 	 */
-	public static native void testSetLongFieldStatic(long j);
+	public final static native void testSetLongFieldStatic(long j);
 
 	/**
 	 * \brief test 7
@@ -67,7 +69,7 @@ public class SimpleCalls {
 	 * which increments each element by j and writes results back to Java array via
 	 * JNI. i.e this is performing an element-wise operation: result = array + j.
 	 */
-	public native void testArrayReadWriteElement(long[] array, long j, long[] result);
+	public final native void testArrayReadWriteElement(long[] array, long j, long[] result);
 
 	/**
 	 * \brief test 8
@@ -77,5 +79,5 @@ public class SimpleCalls {
 	 * increments each element by j and writes results back to Java array via JNI.
 	 * i.e this is performing an element-wise operation: result = array + j.
 	 */
-	public native void testArrayReadWriteRegion(long[] array, long j, long[] result, int len);
+	public final native void testArrayReadWriteRegion(long[] array, long j, long[] result, int len);
 }

@@ -17,22 +17,47 @@ void Java_com_jni_consbench_simpleCall_SimpleCalls_testNoRet(JNIEnv* env,
 		jobject jobj, jlong val) {
 	val += 22;
 
+	if ((val % 3000000) == 1) {
 
-	if ((val % 3000000) == 1)
-	{
 #pragma convert("IBM-1047")
-		printf("hello ");
+		printf("testNoRet run ");
 #pragma convert(pop)
+
 	}
 
 	return;
 }
 
 // test 3
-jlong Java_com_jni_consbench_simpleCall_SimpleCalls_testRet(JNIEnv* env,
-		jobject jobj, jlong val) {
-	val += 2;
-	return val;
+jdouble Java_com_jni_consbench_simpleCall_SimpleCalls_testRet(JNIEnv* env,
+		jobject jobj,
+		jlong jl,
+		jint ji,
+		jboolean jbool,
+		jbyte jb,
+		jchar jc,
+		jshort js,
+		jfloat jf1, jfloat jf2, jfloat jf3, jfloat jf4, jfloat jf5,
+		jdouble jd1, jdouble jd2) {
+
+
+	if ((jl % 3000000) == 1) {
+#pragma convert("IBM-1047")
+		printf("testRet run ");
+#pragma convert(pop)
+	}
+
+	ji += 2;
+
+	jdouble retVal = 0;
+
+	if ((ji + jl) >= (jf1 + jf2 + jf5)) {
+		retVal = jd1 + jd2;
+	} else {
+		retVal = jd2;
+	}
+
+	return retVal;
 }
 
 // test 4
@@ -100,7 +125,7 @@ void Java_com_jni_consbench_simpleCall_SimpleCalls_testArrayReadWriteRegion(
 		JNIEnv* env, jobject jobj, jlongArray input, jlong val,
 		jlongArray output, jint len) {
 
-	jlong inputRegion[len] ;
+	jlong inputRegion[len];
 	jlong outputRegion[len];
 
 	env->GetLongArrayRegion(input, 0, len, inputRegion);

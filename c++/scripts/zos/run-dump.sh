@@ -24,6 +24,11 @@ doWarmup=0
 useXPLINK=0
 BITNESS=31
 
+export enable_ronu_bin_insert=1
+export print_ronu_bin_insert=0
+export ronu_bin_type=zoscan03
+export force_jni_offload_check=1
+
 export LD_LIBRARY_PATH=`pwd`
 #######################################################
 #					Prep and cleanup
@@ -48,29 +53,29 @@ echo "Patching SDK with benchmark DLL"
 
 if [[ $BITNESS -eq "31" ]];
 then
-	if [[ -z $IBM_SDK/jre/lib/$IBM_SDK_FLAV/ ]];
+	if [[ -d "$IBM_SDK/jre/lib/$IBM_SDK_FLAV/" ]];
 	then
-		cp ./libstdlinkjnibench.so $IBM_SDK/jre/lib/$IBM_SDK_FLAV/
+		cp -v ./libstdlinkjnibench.so $IBM_SDK/jre/lib/$IBM_SDK_FLAV/
 	fi
 	
-	if [[ -z $IBM_SDK/lib/$IBM_SDK_FLAV/ ]];
+	if [[ -d "$IBM_SDK/lib/$IBM_SDK_FLAV/" ]];
 	then
-		cp ./libstdlinkjnibench.so $IBM_SDK/lib/$IBM_SDK_FLAV/
+		cp -v ./libstdlinkjnibench.so $IBM_SDK/lib/$IBM_SDK_FLAV/
 	fi
 	
 fi
 
 
 	
-if [[ -z $IBM_SDK/jre/lib/$IBM_SDK_FLAV/ ]];
+if [[ -d "$IBM_SDK/jre/lib/$IBM_SDK_FLAV/" ]];
 then
-	cp ./libxplinkjnibench$BITNESS.so $IBM_SDK/jre/lib/$IBM_SDK_FLAV/libxplinkjnibench.so
+	cp -v ./libxplinkjnibench$BITNESS.so $IBM_SDK/jre/lib/$IBM_SDK_FLAV/libxplinkjnibench.so
 fi
 
 
-if [[ -z $IBM_SDK/lib/$IBM_SDK_FLAV/ ]];
+if [[ -d "$IBM_SDK/lib/$IBM_SDK_FLAV/" ]];
 then
-	cp ./libxplinkjnibench$BITNESS.so $IBM_SDK/lib/$IBM_SDK_FLAV/libxplinkjnibench.so
+	cp -v ./libxplinkjnibench$BITNESS.so $IBM_SDK/lib/$IBM_SDK_FLAV/libxplinkjnibench.so
 fi
 
 
